@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+tool_test_output.*
+*.emapper.annotations
+!test-data/*.emapper.annotations
+*_report.html

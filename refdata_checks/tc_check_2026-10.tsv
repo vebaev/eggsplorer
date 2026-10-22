@@ -1,0 +1,94 @@
+code	our_name	verdict	tcdb_name	suggested_name	final_label
+1.A	α-type channels	OK	α-Type Channels	α-type channels	α-type channels
+1.B	β-barrel porins	OK	β-Barrel Porins	β-barrel porins	β-barrel porins
+1.C	Pore-forming toxins	OK	Pore-Forming Toxins (Proteins and Peptides)	Pore-forming toxins	Pore-forming toxins
+1.D	Non-ribosomally synthesized channels	OK	Non-Ribosomally Synthesized Channels	Non-ribosomally synthesized channels	Non-ribosomally synthesized channels
+1.E	Holins	OK	Holins	Holins	Holins
+1.F	Vesicle fusion pores	OK	Vesicle Fusion Pores	Vesicle fusion pores	Vesicle fusion pores
+1.G	Viral fusion pores	OK	Viral Fusion Pores	Viral fusion pores	Viral fusion pores
+1.H	Paracellular channels	OK	Paracellular Channels	Paracellular channels	Paracellular channels
+1.I	Membrane-bounded channels	OK	Membrane-bounded Channels	Membrane-bounded channels	Membrane-bounded channels
+1.J	Virion egress pyramidal apertures	OK	Virion Egress Pyramidal Apertures	Virion egress pyramidal apertures	Virion egress pyramidal apertures
+1.K	Phage DNA injection channels	OK	Phage DNA Injection Channels	Phage DNA injection channels	Phage DNA injection channels
+1.L	Tunneling nanotubes	OK	Tunneling Nanotubes, TNTs	Tunneling nanotubes	Tunneling nanotubes
+1.M	Membrane fusion-mediating spanins	OK	Membrane Fusion-mediating Spanins	Membrane fusion-mediating spanins	Membrane fusion-mediating spanins
+2.A	Porters (uniporters, symporters, antiporters)	OK	Porters (uniporters, symporters, antiporters)	Porters (uniporters, symporters, antiporters)	Porters (uniporters, symporters, antiporters)
+2.B	Non-ribosomally synthesized porters	OK	Non-ribosomally Synthesized Porters	Non-ribosomally synthesized porters	Non-ribosomally synthesized porters
+2.C	Ion-gradient-driven energizers	OK	Ion-gradient-driven energizers	Ion-gradient-driven energizers	Ion-gradient-driven energizers
+2.D	Transcompartment lipid transfer	FIX	Transcompartment Lipid Carrier	Transcompartment lipid carriers	Transcompartment lipid carriers
+3.A	P-P-bond hydrolysis-driven transporters	OK	P-P-bond-hydrolysis-driven transporters	P-P-bond hydrolysis-driven transporters	P-P-bond hydrolysis-driven transporters
+3.B	Decarboxylation-driven transporters	OK	Decarboxylation-driven transporters	Decarboxylation-driven transporters	Decarboxylation-driven transporters
+3.C	Methyltransfer-driven transporters	OK	Methyltransfer-driven transporters	Methyltransfer-driven transporters	Methyltransfer-driven transporters
+3.D	Oxidoreduction-driven transporters	OK	Oxidoreduction-driven transporters	Oxidoreduction-driven transporters	Oxidoreduction-driven transporters
+3.E	Light absorption-driven transporters	OK	Light absorption-driven transporters	Light absorption-driven transporters	Light absorption-driven transporters
+4.A	Phosphotransfer-driven group translocators (PTS)	OK	Phosphotransfer-driven Group Translocators (PTS)	Phosphotransfer-driven group translocators (PTS)	Phosphotransfer-driven group translocators (PTS)
+4.B	Nicotinamide ribonucleoside uptake transporters	OK	Nicotinamide ribonucleoside uptake transporters	Nicotinamide ribonucleoside uptake transporters	Nicotinamide ribonucleoside uptake transporters
+4.C	Acyl-CoA ligase-coupled transporters	OK	Acyl CoA ligase-coupled transporters	Acyl-CoA ligase-coupled transporters	Acyl-CoA ligase-coupled transporters
+4.D	Polysaccharide synthase/exporters	OK	Polysaccharide Synthase/Exporters	Polysaccharide synthase/exporters	Polysaccharide synthase/exporters
+4.E	Vacuolar polyphosphate polymerases	FIX	Vacuolar Polyphosphate Polymerase-catalyzed Group Translocators	Vacuolar polyphosphate polymerase-catalyzed group translocators	Vacuolar polyphosphate polymerase-catalyzed group translocators
+4.F	Choline/ethanolamine phosphotransferase 1	OK	Choline/EthanolaminePhosphotransferase 1 (CEPT1)	Choline/ethanolamine phosphotransferase 1	Choline/ethanolamine phosphotransferase 1 (CEPT1)
+5.A	Transmembrane 2-electron transfer carriers	OK	Transmembrane 2-electron transfer carriers	Transmembrane 2-electron transfer carriers	Transmembrane 2-electron transfer carriers
+5.B	Transmembrane 1-electron transfer carriers	OK	Transmembrane 1-electron transfer carriers	Transmembrane 1-electron transfer carriers	Transmembrane 1-electron transfer carriers
+8.A	Auxiliary transport proteins	OK	Auxiliary transport proteins	Auxiliary transport proteins	Auxiliary transport proteins
+8.B	Ribosomally synthesized toxins targeting transporters	OK	Ribosomally synthesized protein/peptide toxins/agonists that target channels and carriers	Ribosomally synthesized toxins targeting transporters	Ribosomally synthesized protein/peptide toxins/agonists that target channels and carriers
+8.C	Non-ribosomally synthesized toxins targeting transporters	OK	Non-ribosomally synthesized toxins that target channels, carriers and pumps	Non-ribosomally synthesized toxins targeting transporters	Non-ribosomally synthesized toxins that target channels, carriers and pumps
+9.A	Recognized transporters of unknown mechanism	OK	Recognized transporters of unknown biochemical mechanism	Recognized transporters of unknown mechanism	Recognized transporters of unknown biochemical mechanism
+9.B	Putative transport proteins	OK	Putative transport proteins	Putative transport proteins	Putative transport proteins
+9.C	Functionally characterized transporters lacking identified sequences	OK	Functionally characterized transporters lacking identified sequences	Functionally characterized transporters lacking identified sequences	Functionally characterized transporters lacking identified sequences
+1.A.1	Voltage-gated ion channel (VIC)	OK	The Voltage-gated Ion Channel (VIC) Superfamily	Voltage-gated ion channel (VIC)	Voltage-gated ion channel (VIC)
+1.A.8	Major intrinsic protein (MIP, aquaporins)	FIX	The Major Intrinsic Aquaporin Protein, (MIP) Family	Major intrinsic aquaporin protein (MIP)	Major intrinsic aquaporin protein (MIP)
+1.A.11	Ammonium channel transporter (Amt)	OK	The Ammonium Channel Transporter (Amt) Family	Ammonium channel transporter (Amt)	Ammonium channel transporter (Amt)
+1.A.22	Large-conductance mechanosensitive channel (MscL)	OK	The Large Conductance Mechanosensitive Ion Channel (MscL) Family	Large-conductance mechanosensitive channel (MscL)	Large-conductance mechanosensitive channel (MscL)
+1.A.23	Small-conductance mechanosensitive channel (MscS)	OK	The Small Conductance Mechanosensitive Ion Channel (MscS) Family	Small-conductance mechanosensitive channel (MscS)	Small-conductance mechanosensitive channel (MscS)
+1.A.30	H+/Na+-translocating MotA/TolQ/ExbB	FIX	The H+- or Na+-translocating Bacterial Flagellar Motor/ExbBD Outer Membrane Transport Energizer (Mot-Exb) Superfamily	H+- or Na+-translocating bacterial flagellar motor/ExbBD outer membrane transport energizer (Mot-Exb)	H+/Na+-translocating flagellar motor / ExbBD energizer (Mot-Exb)
+1.A.35	CorA metal ion transporter (MIT)	OK	The CorA/Mrs2 Metal Ion Transporter (MIT) Family	CorA metal ion transporter (MIT)	CorA metal ion transporter (MIT)
+1.B.1	General bacterial porin (GBP)	OK	The General Bacterial Porin (GBP) Family	General bacterial porin (GBP)	General bacterial porin (GBP)
+1.B.14	Outer membrane receptor (OMR, TonB-dependent)	FIX	The Outer Membrane Receptor (OMR) Family	Outer membrane receptor (OMR)	Outer membrane receptor (OMR)
+1.B.17	Outer membrane factor (OMF)	OK	The Outer Membrane Factor (OMF) Family	Outer membrane factor (OMF)	Outer membrane factor (OMF)
+1.B.33	Outer membrane protein insertion porin (Bam)	FIX	The Outer Membrane Protein Insertion Porin (Bam Complex) (OmpIP) Family	Outer membrane protein insertion porin (Bam complex) (OmpIP)	Outer membrane protein insertion porin, Bam complex (OmpIP)
+2.A.1	Major facilitator superfamily (MFS)	OK	The Major Facilitator Superfamily (MFS)	Major facilitator superfamily (MFS)	Major facilitator superfamily (MFS)
+2.A.3	Amino acid–polyamine–organocation (APC)	OK	The Amino Acid-Polyamine-Organocation (APC) Superfamily	Amino acid–polyamine–organocation (APC)	Amino acid–polyamine–organocation (APC)
+2.A.4	Cation diffusion facilitator (CDF)	OK	The Cation Diffusion Facilitator (CDF) Family	Cation diffusion facilitator (CDF)	Cation diffusion facilitator (CDF)
+2.A.6	Resistance–nodulation–cell division (RND)	OK	The Resistance-Nodulation-Cell Division (RND) Superfamily	Resistance–nodulation–cell division (RND)	Resistance–nodulation–cell division (RND)
+2.A.7	Drug/metabolite transporter (DMT)	OK	The Drug/Metabolite Transporter (DMT) Superfamily	Drug/metabolite transporter (DMT)	Drug/metabolite transporter (DMT)
+2.A.9	Membrane protein insertase (YidC/Oxa1)	FIX	The Membrane Protein Insertase (YidC/Alb3/Oxa1) Family	Membrane protein insertase (YidC/Alb3/Oxa1)	Membrane protein insertase (YidC/Alb3/Oxa1)
+2.A.13	C4-dicarboxylate uptake (Dcu)	OK	The C4-Dicarboxylate Uptake (Dcu) Family	C4-dicarboxylate uptake (Dcu)	C4-dicarboxylate uptake (Dcu)
+2.A.14	Lactate permease (LctP)	OK	The Lactate Permease (LctP) Family	Lactate permease (LctP)	Lactate permease (LctP)
+2.A.17	Proton-dependent oligopeptide transporter (POT)	FIX	The Proton-dependent Oligopeptide Transporter (POT/PTR) Family	Proton-dependent oligopeptide transporter (POT/PTR)	Proton-dependent oligopeptide transporter (POT/PTR)
+2.A.20	Inorganic phosphate transporter (PiT)	OK	The Inorganic Phosphate Transporter (PiT) Family	Inorganic phosphate transporter (PiT)	Inorganic phosphate transporter (PiT)
+2.A.21	Solute:sodium symporter (SSS)	OK	The Solute:Sodium Symporter (SSS) Family	Solute:sodium symporter (SSS)	Solute:sodium symporter (SSS)
+2.A.22	Neurotransmitter:sodium symporter (NSS)	OK	The Neurotransmitter:Sodium Symporter (NSS) Family	Neurotransmitter:sodium symporter (NSS)	Neurotransmitter:sodium symporter (NSS)
+2.A.23	Dicarboxylate/amino acid:cation symporter (DAACS)	OK	The Dicarboxylate/Amino Acid:Cation (Na+ or H+) Symporter (DAACS) Family	Dicarboxylate/amino acid:cation symporter (DAACS)	Dicarboxylate/amino acid:cation symporter (DAACS)
+2.A.25	Alanine or glycine:cation symporter (AGCS)	OK	The Alanine or Glycine:Cation Symporter (AGCS) Family	Alanine or glycine:cation symporter (AGCS)	Alanine or glycine:cation symporter (AGCS)
+2.A.26	Branched-chain amino acid:cation symporter (LIVCS)	OK	The Branched Chain Amino Acid:Cation Symporter (LIVCS) Family	Branched-chain amino acid:cation symporter (LIVCS)	Branched-chain amino acid:cation symporter (LIVCS)
+2.A.36	Monovalent cation:proton antiporter-1 (CPA1)	OK	The Monovalent Cation:Proton Antiporter-1 (CPA1) Family	Monovalent cation:proton antiporter-1 (CPA1)	Monovalent cation:proton antiporter-1 (CPA1)
+2.A.37	Monovalent cation:proton antiporter-2 (CPA2)	OK	The Monovalent Cation:Proton Antiporter-2 (CPA2) Family	Monovalent cation:proton antiporter-2 (CPA2)	Monovalent cation:proton antiporter-2 (CPA2)
+2.A.40	Nucleobase:cation symporter-2 (NCS2)	OK	The Nucleobase/Ascorbate Transporter (NAT) or Nucleobase:Cation Symporter-2 (NCS2) Family	Nucleobase:cation symporter-2 (NCS2)	Nucleobase:cation symporter-2 (NCS2)
+2.A.47	Divalent anion:Na+ symporter (DASS)	OK	The Divalent Anion:Na+ Symporter (DASS) Family	Divalent anion:Na+ symporter (DASS)	Divalent anion:Na+ symporter (DASS)
+2.A.53	Sulfate permease (SulP)	OK	The Sulfate Permease (SulP) Family	Sulfate permease (SulP)	Sulfate permease (SulP)
+2.A.55	Metal ion transporter (Nramp)	OK	The Metal Ion (Mn2+-iron) Transporter (Nramp) Family	Metal ion transporter (Nramp)	Metal ion transporter (Nramp)
+2.A.56	Tripartite ATP-independent periplasmic transporter (TRAP)	FIX	The Tripartite ATP-independent Periplasmic Transporter (TRAP-T) Family	Tripartite ATP-independent periplasmic transporter (TRAP-T)	Tripartite ATP-independent periplasmic transporter (TRAP-T)
+2.A.58	Phosphate:Na+ symporter (PNaS)	OK	The Phosphate:Na+ Symporter (PNaS) Family	Phosphate:Na+ symporter (PNaS)	Phosphate:Na+ symporter (PNaS)
+2.A.63	Monovalent cation:proton antiporter-3 (CPA3, Mrp)	FIX	The Monovalent Cation (K+ or Na+):Proton Antiporter-3 (CPA3) Family	Monovalent cation (K+ or Na+):proton antiporter-3 (CPA3)	Monovalent cation (K+ or Na+):proton antiporter-3 (CPA3)
+2.A.64	Twin-arginine targeting (Tat)	OK	The Twin Arginine Targeting (Tat) Family	Twin-arginine targeting (Tat)	Twin-arginine targeting (Tat)
+2.A.66	Multidrug/oligosaccharidyl-lipid/polysaccharide flippase (MOP)	OK	The Multidrug/Oligosaccharidyl-lipid/Polysaccharide (MOP) Flippase Superfamily	Multidrug/oligosaccharidyl-lipid/polysaccharide flippase (MOP)	Multidrug/oligosaccharidyl-lipid/polysaccharide flippase (MOP)
+2.A.69	Auxin efflux carrier (AEC)	OK	The Auxin Efflux Carrier (AEC) Family	Auxin efflux carrier (AEC)	Auxin efflux carrier (AEC)
+2.A.72	K+ uptake permease (KUP)	OK	The K+ Uptake Permease (KUP) Family	K+ uptake permease (KUP)	K+ uptake permease (KUP)
+2.C.1	TonB–ExbB–ExbD / TolA–TolQ–TolR energizers	OK	The TonB-ExbB-ExbD/TolA-TolQ-TolR Outer Membrane Receptor Energizers and Stabilizers (TonB/TolA) Family	TonB–ExbB–ExbD / TolA–TolQ–TolR energizers	TonB–ExbB–ExbD / TolA–TolQ–TolR energizers
+3.A.1	ATP-binding cassette (ABC) superfamily	OK	The ATP-binding Cassette (ABC) Superfamily	ATP-binding cassette (ABC) superfamily	ATP-binding cassette (ABC) superfamily
+3.A.2	F-, V- and A-type ATPases	OK	The H+- or Na+-translocating F-type, V-type and A-type ATPase (F-ATPase) Superfamily	F-, V- and A-type ATPases	H+- or Na+-translocating F-, V- and A-type ATPases (F-ATPase)
+3.A.3	P-type ATPases	OK	The P-type ATPase (P-ATPase) Superfamily	P-type ATPases	P-type ATPases (P-ATPase)
+3.A.4	Arsenite–antimonite efflux (ArsAB)	OK	The Arsenite-Antimonite (ArsAB) Efflux Family	Arsenite–antimonite efflux (ArsAB)	Arsenite–antimonite efflux (ArsAB)
+3.A.5	General secretory pathway (Sec)	OK	The General Secretory Pathway (Sec) Family	General secretory pathway (Sec)	General secretory pathway (Sec)
+3.A.6	Type III secretion	OK	The Type III (Virulence-related) Secretory Pathway (IIISP) Family	Type III secretion	Type III secretory pathway (IIISP)
+3.A.7	Type IV secretion	OK	The Type IV (Conjugal DNA-Protein Transfer or VirB) Secretory Pathway (IVSP) Family	Type IV secretion	Type IV secretory pathway (IVSP)
+3.A.15	Type II secretion (main terminal branch)	FIX	The Outer Membrane Protein Secreting Main Terminal Branch (MTB) Family	Outer membrane protein secreting main terminal branch (MTB)	Outer membrane protein secreting main terminal branch (MTB, type II secretion)
+3.A.23	Type VI secretion	OK	The Type VI Symbiosis/Virulence Secretory System (T6SS) Family	Type VI secretion	Type VI secretion system (T6SS)
+3.D.1	H+/Na+-translocating NADH dehydrogenase (complex I)	FIX	The H+ or Na+-translocating NADH Dehydrogenase (NDH) Family	H+ or Na+-translocating NADH dehydrogenase (NDH)	H+ or Na+-translocating NADH dehydrogenase (NDH)
+3.D.2	Proton-translocating transhydrogenase	OK	The Proton-translocating Transhydrogenase (PTH) Family	Proton-translocating transhydrogenase	Proton-translocating transhydrogenase (PTH)
+3.D.3	Proton-translocating quinol:cytochrome c reductase	OK	The Proton-translocating Quinol:Cytochrome c Reductase (QCR) Superfamily	Proton-translocating quinol:cytochrome c reductase	Proton-translocating quinol:cytochrome c reductase (QCR)
+3.D.4	Proton-translocating cytochrome oxidase	OK	The Proton-translocating Cytochrome Oxidase (COX) Superfamily	Proton-translocating cytochrome oxidase	Proton-translocating cytochrome oxidase (COX)
+4.A.1	PTS glucose–glucoside (Glc) family	OK	The PTS Glucose-Glucoside (Glc) Family	PTS glucose–glucoside (Glc) family	PTS glucose–glucoside (Glc) family
+4.A.2	PTS fructose–mannitol (Fru) family	OK	The PTS Fructose-Mannitol (Fru) Family	PTS fructose–mannitol (Fru) family	PTS fructose–mannitol (Fru) family
+4.A.3	PTS lactose–chitobiose–β-glucoside (Lac) family	OK	The PTS Lactose-N,N'-Diacetylchitobiose-β-glucoside (Lac) Family	PTS lactose–chitobiose–β-glucoside (Lac) family	PTS lactose–chitobiose–β-glucoside (Lac) family
+4.A.6	PTS mannose–fructose–sorbose (Man) family	OK	The PTS Mannose-Fructose-Sorbose (Man) Family	PTS mannose–fructose–sorbose (Man) family	PTS mannose–fructose–sorbose (Man) family

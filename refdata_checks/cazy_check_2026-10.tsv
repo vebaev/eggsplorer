@@ -1,0 +1,144 @@
+family	our_label	verdict	cazy_evidence	suggested_label	final_label
+GH1	β-glucosidase	OK	β-glucosidase; β-galactosidase; β-mannosidase (35 activities)	β-glucosidase	β-glucosidase
+GH2	β-galactosidase	OK	β-galactosidase; β-glucosidase; β-mannosidase; β-glucuronidase (18)	β-galactosidase	β-galactosidase
+GH3	β-glucosidase / β-N-acetylglucosaminidase	OK	β-glucosidase; xylan exo-β-1,4-xylosidase; β-N-acetylhexosaminidase (EC 3.2.1.52) (36)	β-glucosidase / β-N-acetylglucosaminidase	β-glucosidase / β-N-acetylglucosaminidase
+GH4	6-phospho-α/β-glucosidase (NAD-dependent)	FIX	α-glucosidase; α-galactosidase; 6-phospho-β-glucosidase; 6-phospho-α-glucosidase; α-glucuronidase; note: NAD+ mechanism	NAD-dependent α-glucosidase/α-galactosidase/6-P-glucosidase	NAD-dependent α-glucosidase / α-galactosidase / 6-P-glucosidase
+GH5	endo-β-1,4-glucanase / mannanase (diverse)	OK	cellulose endo-β-1,4-glucosidase; endo-β-1,4-xylanase; β-mannanase among 33; note: ex cellulase family A, subfamilies	endo-β-1,4-glucanase / mannanase (diverse)	endo-β-1,4-glucanase / mannanase (diverse)
+GH6	cellobiohydrolase	FIX	cellulose endo-β-1,4-glucosidase; endo-xylanase; cellulose exo-β-1,4-glucobiosidase (4); note: ex cellulase family B	cellobiohydrolase / endo-β-1,4-glucanase	cellobiohydrolase / endo-β-1,4-glucanase
+GH8	endoglucanase / chitosanase / xylanase	OK	cellulose endo-β-1,4-glucosidase; endo-β-1,4-xylanase; chitosanase (7)	endoglucanase / chitosanase / xylanase	endoglucanase / chitosanase / xylanase
+GH9	endoglucanase	OK	cellulose endo-β-1,4-glucosidase; MLG endo-glucanase; cellobiohydrolase (9)	endoglucanase	endoglucanase
+GH10	endo-β-1,4-xylanase	OK	xylan endo-β-1,4-xylosidase; endo-β-1,3-xylanase; endoglucanase (10)	endo-β-1,4-xylanase	endo-β-1,4-xylanase
+GH11	endo-β-1,4-xylanase	OK	xylan endo-β-1,4-xylosidase; xylan exo-β-1,4-xylosidase (2)	endo-β-1,4-xylanase	endo-β-1,4-xylanase
+GH12	endoglucanase / xyloglucanase	OK	cellulose endo-β-1,4-glucosidase; MLG endo-β-1,4-glucosidase; xyloglucan endo-β-1,4-glucosidase (3)	endoglucanase / xyloglucanase	endoglucanase / xyloglucanase
+GH13	α-amylase family (starch and glycogen enzymes)	OK	α-amylase; glucoamylase; oligo-1,6-glucosidase; α-glucosidase; pullulanase (41)	α-amylase family (starch and glycogen enzymes)	α-amylase family (starch and glycogen enzymes)
+GH14	β-amylase	OK	amylose exo-α-1,4-glucobiosidase (β-amylase) (1)	β-amylase	β-amylase
+GH15	glucoamylase / glucodextranase	OK	amylose exo-α-1,4-glucosidase (glucoamylase); trehalase; dextran exo-α-1,6-glucosidase (glucodextranase) (5)	glucoamylase / glucodextranase	glucoamylase / glucodextranase
+GH16	β-1,3/1,4-glucanase, laminarinase, agarase	OK	MLG endo-β-1,3/4-glucosidase; endo-β-1,3-glucanase; agarase; κ-carrageenase; XET (24)	β-1,3/1,4-glucanase, laminarinase, agarase	β-1,3/1,4-glucanase, laminarinase, agarase
+GH17	β-1,3-glucanase	OK	glucan endo-β-1,3-glucosidase; glucan exo-β-1,3-glucosidase; β-1,3-glucanosyltransglucosidase (6)	β-1,3-glucanase	β-1,3-glucanase
+GH18	chitinase	OK	chitin endo-β-1,4-N-acetylglucosaminidase; β-N-acetylhexosaminidase; ENGase (10); note: chitinases classes III and V	chitinase	chitinase
+GH19	chitinase	OK	chitin endo-β-1,4-N-acetylglucosaminidase; lysozyme (3); note: chitinases classes I, II, IV	chitinase	chitinase
+GH20	β-hexosaminidase	OK	β-N-acetylhexosaminidase; β-N-acetylgalactosaminidase; lacto-N-biosidase (11)	β-hexosaminidase	β-hexosaminidase
+GH23	lytic transglycosylase (peptidoglycan)	OK	chitinase; lysozyme; peptidoglycan lytic transglycosylase (3); note: family 1 of PG lytic transglycosylases	lytic transglycosylase (peptidoglycan)	lytic transglycosylase (peptidoglycan)
+GH24	lysozyme	OK	peptidoglycan endo-β-1,4-N-acetylmuramidase (lysozyme) (1)	lysozyme	lysozyme
+GH25	lysozyme	OK	peptidoglycan endo-β-1,4-N-acetylmuramidase (lysozyme) (1)	lysozyme	lysozyme
+GH26	β-mannanase	OK	mannan endo-β-1,4-mannosidase; exo-β-1,4-mannobiosidase; MLG endo-β-1,4-glucanase (8)	β-mannanase	β-mannanase
+GH27	α-galactosidase	OK	α-galactosidase; α-N-acetylgalactosaminidase; isomaltodextranase (9)	α-galactosidase	α-galactosidase
+GH28	polygalacturonase	OK	galacturonan endo-α-1,4-galacturonidase; exo-polygalacturonase; rhamnogalacturonase (6)	polygalacturonase	polygalacturonase
+GH29	α-L-fucosidase	OK	α-L-fucosidase; exo-α-1,2-L-fucosidase; α-1,3/1,6-fucosidases (10)	α-L-fucosidase	α-L-fucosidase
+GH30	glucosylceramidase / β-xylosidase / β-1,6-galactanase	OK	endo-β-1,4-xylanase (glucuronoxylanase); β-glucosidase; ceramide β-glucosidase; β-xylosidase; endo-β-1,6-galactanase (17)	glucosylceramidase / β-xylosidase / β-1,6-galactanase	glucosylceramidase / β-xylosidase / β-1,6-galactanase
+GH31	α-glucosidase / α-xylosidase	OK	α-glucosidase; oligo-1,6-glucosidase; α-xylosidase; sucrase-isomaltase (17)	α-glucosidase / α-xylosidase	α-glucosidase / α-xylosidase
+GH32	invertase / fructanase	OK	inulinase; sucrose β-2,1-fructosidase (invertase); levanase; levansucrase (14)	invertase / fructanase	invertase / fructanase
+GH33	sialidase	OK	α-neuraminidase (sialidase); Kdo hydrolase; trans-sialidase (5)	sialidase	sialidase
+GH35	β-galactosidase	OK	β-galactosidase; exo-β-glucosaminidase; exo-β-1,4-galactanase (6)	β-galactosidase	β-galactosidase
+GH36	α-galactosidase	OK	α-galactosidase; α-N-acetylgalactosaminidase; β-L-arabinopyranosidase (11)	α-galactosidase	α-galactosidase
+GH37	trehalase	OK	trehalose α-1,1-glucosidase (trehalase) (1)	trehalase	trehalase
+GH38	α-mannosidase	OK	α-mannosidase; mannosyl-oligosaccharide α-1,2/1,3/1,6-mannosidases (8)	α-mannosidase	α-mannosidase
+GH39	β-xylosidase	FIX	β-glucosidase; β-galactosidase; β-xylosidase; α-L-iduronidase (EC 3.2.1.76) (8)	β-xylosidase / α-L-iduronidase	β-xylosidase / α-L-iduronidase
+GH42	β-galactosidase	OK	β-galactosidase; exo-β-1,3-galactosidase; α-L-arabinopyranosidase (3)	β-galactosidase	β-galactosidase
+GH43	β-xylosidase / α-L-arabinofuranosidase / arabinanase	OK	xylan β-1,4-xylosidase (3.2.1.37); α-L-arabinofuranosidase (3.2.1.55); endo-α-1,5-arabinanase (3.2.1.99)	β-xylosidase / α-L-arabinofuranosidase / arabinanase	β-xylosidase / α-L-arabinofuranosidase / arabinanase
+GH44	endoglucanase / xyloglucanase	OK	endo-β-1,4-glucanase (3.2.1.4); xylanase (3.2.1.8); xyloglucanase (3.2.1.151)	endoglucanase / xyloglucanase	endoglucanase / xyloglucanase
+GH46	chitosanase	OK	chitosanase (3.2.1.132), sole activity	chitosanase	chitosanase
+GH48	cellobiohydrolase	OK	endoglucanase (3.2.1.4); cellobiohydrolase (3.2.1.91); reducing-end cellobiohydrolase (3.2.1.176)	cellobiohydrolase	cellobiohydrolase
+GH51	α-L-arabinofuranosidase	OK	α-L-arabinofuranosidase (3.2.1.55); endoglucanase (3.2.1.4); xylanase (3.2.1.8)	α-L-arabinofuranosidase	α-L-arabinofuranosidase
+GH53	endo-β-1,4-galactanase	OK	arabinogalactan endo-β-1,4-galactanase (3.2.1.89)	endo-β-1,4-galactanase	endo-β-1,4-galactanase
+GH57	α-amylase / 4-α-glucanotransferase	OK	α-amylase (3.2.1.1); 4-α-glucanotransferase (2.4.1.25); branching enzyme (2.4.1.18)	α-amylase / 4-α-glucanotransferase	α-amylase / 4-α-glucanotransferase
+GH63	processing α-glucosidase	FIX	α-glucosidase (3.2.1.20); exo-α-1,3-glucosidase (3.2.1.84); mannosyl-oligosaccharide α-1,2-glucosidase (3.2.1.106)	α-glucosidase (incl. ER processing glucosidase I)	α-glucosidase (incl. ER processing glucosidase I)
+GH64	β-1,3-glucanase	OK	endo-β-1,3-glucanase (3.2.1.39)	β-1,3-glucanase	β-1,3-glucanase
+GH65	trehalose / maltose phosphorylase	OK	maltose phosphorylase (2.4.1.8); trehalose phosphorylase (2.4.1.64); trehalase (3.2.1.28)	trehalose / maltose phosphorylase	trehalose / maltose phosphorylase
+GH73	β-N-acetylglucosaminidase (peptidoglycan)	OK	peptidoglycan endo-β-1,4-N-acetylglucosaminidase (3.2.1.-); mannosyl-glycoprotein endo-β-GlcNAc-ase (3.2.1.96)	β-N-acetylglucosaminidase (peptidoglycan)	β-N-acetylglucosaminidase (peptidoglycan)
+GH74	xyloglucanase	OK	xyloglucanase (3.2.1.151); xyloglucan exo-glucobiosidase (3.2.1.150); endoglucanase (3.2.1.4)	xyloglucanase	xyloglucanase
+GH77	4-α-glucanotransferase (amylomaltase)	OK	4-α-glucanotransferase (2.4.1.25), sole activity	4-α-glucanotransferase (amylomaltase)	4-α-glucanotransferase (amylomaltase)
+GH78	α-L-rhamnosidase	OK	α-L-rhamnosidase (3.2.1.40); RG-I exo-α-L-rhamnosidase (3.2.1.174)	α-L-rhamnosidase	α-L-rhamnosidase
+GH84	β-N-acetylglucosaminidase	OK	protein O-GlcNAcase (3.2.1.169); β-N-acetylhexosaminidase (3.2.1.52); hyaluronidase (3.2.1.35)	β-N-acetylglucosaminidase	β-N-acetylglucosaminidase
+GH85	endo-β-N-acetylglucosaminidase	OK	mannosyl-glycoprotein endo-β-N-acetylglucosaminidase (3.2.1.96), sole activity	endo-β-N-acetylglucosaminidase	endo-β-N-acetylglucosaminidase
+GH88	unsaturated glucuronyl hydrolase	OK	unsaturated β-glucuronidase (3.2.1.-); gellan/chondroitin unsaturated glucuronidases (3.2.1.179/180)	unsaturated glucuronyl hydrolase	unsaturated glucuronyl hydrolase
+GH92	α-mannosidase	OK	α-mannosidase (3.2.1.24); exo-α-1,2-mannosidase (3.2.1.113); exo-α-1,3/1,4-mannosidases	α-mannosidase	α-mannosidase
+GH94	cellobiose / chitobiose phosphorylase	OK	cellobiose phosphorylase (2.4.1.20); cellodextrin phosphorylase (2.4.1.49); chitobiose phosphorylase (2.4.1.280)	cellobiose / chitobiose phosphorylase	cellobiose / chitobiose phosphorylase
+GH95	α-L-fucosidase	OK	α-L-fucosidase (3.2.1.51); α-1,2-L-fucosidase (3.2.1.63)	α-L-fucosidase	α-L-fucosidase
+GH103	lytic transglycosylase (peptidoglycan)	OK	peptidoglycan lytic transglycosylase (4.2.2.29); note: LT family 3 (Blackburn & Clarke)	lytic transglycosylase (peptidoglycan)	lytic transglycosylase (peptidoglycan)
+GH104	lytic transglycosylase (peptidoglycan)	OK	peptidoglycan lytic transglycosylase (4.2.2.29); note: LT family 4 (Blackburn & Clarke)	lytic transglycosylase (peptidoglycan)	lytic transglycosylase (peptidoglycan)
+GH105	unsaturated rhamnogalacturonyl hydrolase	OK	RG-I unsaturated α-galacturonidase (3.2.1.172); unsaturated β-glucuronidase; HG unsaturated α-galacturonidase	unsaturated rhamnogalacturonyl hydrolase	unsaturated rhamnogalacturonyl hydrolase
+GH106	α-L-rhamnosidase	OK	α-L-rhamnosidase (3.2.1.40); RG-I exo-α-L-rhamnosidase (3.2.1.174)	α-L-rhamnosidase	α-L-rhamnosidase
+GH108	N-acetylmuramidase	OK	peptidoglycan endo-β-1,4-N-acetylmuramidase (3.2.1.17), sole activity	N-acetylmuramidase	N-acetylmuramidase
+GH109	α-N-acetylgalactosaminidase	OK	α-N-acetylgalactosaminidase (3.2.1.49); protein O-α-GalNAc-ase (3.2.1.217); note: NAD+-dependent mechanism	α-N-acetylgalactosaminidase	α-N-acetylgalactosaminidase
+GH114	endo-α-1,4-polygalactosaminidase	OK	endo-α-1,4-N-galactosaminidase (3.2.1.109), sole activity	endo-α-1,4-polygalactosaminidase	endo-α-1,4-polygalactosaminidase
+GH127	β-L-arabinofuranosidase	OK	β-L-arabinofuranosidase (3.2.1.185); RG-II α-1,3-aceric acid hydrolase; Hyp-β-L-arabinofuranosidase	β-L-arabinofuranosidase	β-L-arabinofuranosidase
+GH130	β-mannoside phosphorylase	OK	β-1,4-mannosyl-glucose phosphorylase (2.4.1.281); β-1,4-mannan phosphorylase (2.4.1.319); β-1,2-mannan phosphorylase (2.4.1.340)	β-mannoside phosphorylase	β-mannoside phosphorylase
+GH133	glycogen debranching (amylo-α-1,6-glucosidase)	OK	glycogen exo-α-1,6-glucosidase / amylo-α-1,6-glucosidase (3.2.1.33), sole activity	glycogen debranching (amylo-α-1,6-glucosidase)	glycogen debranching (amylo-α-1,6-glucosidase)
+GT1	UDP-glycosyltransferase	OK	87 activities, mostly UDP-Glc: small-molecule (flavonoid, terpenoid, macrolide) glycosyltransferases; inverting	UDP-glycosyltransferase	UDP-glycosyltransferase
+GT2	inverting glycosyltransferase (cellulose/chitin synthase-like)	OK	inverting; cellulose synthase (2.4.1.12); chitin synthase (2.4.1.16); hyaluronan synthase (2.4.1.212); Dol-P-Man synthase (2.4.1.83)	inverting glycosyltransferase (cellulose/chitin synthase-like)	inverting glycosyltransferase (cellulose/chitin synthase-like)
+GT4	retaining glycosyltransferase (group 1)	OK	retaining; sucrose synthase (2.4.1.13); sucrose-P synthase (2.4.1.14); many α-mannosyl/α-glucosyltransferases	retaining glycosyltransferase (group 1)	retaining glycosyltransferase (group 1)
+GT5	glycogen / starch synthase	OK	UDP-Glc glycogen/starch synthase (2.4.1.11); ADP-Glc glycogen/starch synthase (2.4.1.21); retaining	glycogen / starch synthase	glycogen / starch synthase
+GT8	retaining glycosyltransferase (LPS, glycogenin-like)	OK	retaining; LPS α-glucosyl/galactosyltransferases (2.4.1.58, 2.4.1.44); glycogenin (2.4.1.186)	retaining glycosyltransferase (LPS, glycogenin-like)	retaining glycosyltransferase (LPS, glycogenin-like)
+GT9	heptosyltransferase (LPS core)	OK	LPS heptosyltransferase I/II/III (2.4.99.23-25); LPS β-GlcNAc-transferase (2.4.1.56); inverting	heptosyltransferase (LPS core)	heptosyltransferase (LPS core)
+GT19	lipid-A-disaccharide synthase	OK	Lipid-A-disaccharide synthase (EC 2.4.1.182)	lipid-A-disaccharide synthase	lipid-A-disaccharide synthase
+GT20	trehalose-6-phosphate synthase	OK	trehalose-6-P synthase (UDP/GDP-forming, EC 2.4.1.15/36); glucosylglycerol-P synthase	trehalose-6-phosphate synthase	trehalose-6-phosphate synthase
+GT25	LPS galactosyltransferase	OK	LPS b-1,4-GalNAc transferase; UDP-Gal b-1,4-galactosyltransferase; procollagen GalT	LPS galactosyltransferase	LPS galactosyltransferase
+GT26	UDP-ManNAcA transferase (teichoic acid, capsule)	FIX	UDP-ManNAc b-N-acetylmannosaminyltransferase; UDP-ManNAcA transferase; UDP-Gal/UDP-Glc b-1,4-transferase	ManNAc / ManNAcA b-transferase (also Gal/Glc)	β-ManNAc / ManNAcA transferase (also Gal, Glc)
+GT28	MurG / MGDG synthase	OK	UDP-GlcNAc: undecaprenyl-PP-MurNAc-pentapeptide GlcNAc-transferase (MurG); MGDG/DGDG synthase; 1,2-DAG 3-glucosyltransferase	MurG / MGDG synthase	MurG / MGDG synthase
+GT30	Kdo transferase (WaaA)	OK	CMP-b-Kdo: a-Kdo transferase (EC 2.4.99.-)	Kdo transferase (WaaA)	Kdo transferase (WaaA)
+GT35	glycogen / starch phosphorylase	OK	a-1,4-glucan phosphorylase (EC 2.4.1.1)	glycogen / starch phosphorylase	glycogen / starch phosphorylase
+GT39	protein O-mannosyltransferase	OK	Dol-P-Man: protein mannosyltransferase (EC 2.4.1.109)	protein O-mannosyltransferase	protein O-mannosyltransferase
+GT41	O-GlcNAc transferase	OK	UDP-GlcNAc: protein O-b-GlcNAc transferase (EC 2.4.1.255); protein O-a-L-fucosyltransferase; peptide N-b-glucosyltransferase	O-GlcNAc transferase	O-GlcNAc transferase
+GT51	peptidoglycan glycosyltransferase	OK	Peptidoglycan glycosyltransferase (EC 2.4.1.129); mono- or bifunctional (with PBP transpeptidase)	peptidoglycan glycosyltransferase	peptidoglycan glycosyltransferase
+GT53	arabinosyltransferase (EmbA/B/C)	OK	Decaprenyl-P-Araf: lipoarabinomannan a-1,5-arabinofuranosyltransferase; Decaprenyl-P-Araf: a-D-arabinofuranosyltransferase	arabinosyltransferase (EmbA/B/C)	arabinosyltransferase (EmbA/B/C)
+GT81	glucosyl-3-phosphoglycerate synthase	OK	glucosyl-3-phosphoglycerate synthase (EC 2.4.1.266); mannosyl-3-phosphoglycerate synthase (EC 2.4.1.217); glucosylglycerate synthase	glucosyl-3-phosphoglycerate synthase	glucosyl-3-phosphoglycerate synthase
+GT83	lipid A aminoarabinose transferase (ArnT)	OK	Und-P-a-L-Ara4N: 4-amino-4-deoxy-b-L-arabinosyltransferase (EC 2.4.2.43)	lipid A aminoarabinose transferase (ArnT)	lipid A aminoarabinose transferase (ArnT)
+GT84	cyclic β-1,2-glucan synthase	OK	UDP-Glc: b-1,2-glucan glucosyltransferase (EC 2.4.1.-)	cyclic β-1,2-glucan synthase	cyclic β-1,2-glucan synthase
+GT85	arabinofuranosyltransferase (AftA)	OK	DPA: galactan a-D-arabinofuranosyltransferase; DPA: arabinan b-1,2-arabinofuranosyltransferase	arabinofuranosyltransferase (AftA)	arabinofuranosyltransferase (AftA)
+GT87	polyprenyl-phosphomannose-dependent mannosyltransferase	OK	Polyprenol-P-Man: a-1,2-mannosyltransferase; PIM pentamannoside synthase; note: polyprenol-P-Man donor	polyprenyl-phosphomannose-dependent mannosyltransferase	polyprenyl-phosphomannose-dependent mannosyltransferase
+PL1	pectate lyase	OK	pectate lyase (4.2.2.2); pectin lyase (4.2.2.10); poly-GalNAcA lyase	pectate lyase	pectate lyase
+PL3	pectate lyase	OK	pectate lyase (4.2.2.2) only	pectate lyase	pectate lyase
+PL4	rhamnogalacturonan lyase	OK	rhamnogalacturonan lyase (4.2.2.23) only	rhamnogalacturonan lyase	rhamnogalacturonan lyase
+PL6	alginate lyase / chondroitinase	OK	endo-b-D-mannuronate / endo-a-L-guluronate alginate lyases (4.2.2.3/11); chondroitin B lyase (4.2.2.19)	alginate lyase / chondroitinase	alginate lyase / chondroitinase
+PL7	alginate lyase	OK	endo-b-D-mannuronate-alginate lyase (4.2.2.3); endo-a-L-guluronate-alginate lyase (4.2.2.11); glucuronan lyase	alginate lyase	alginate lyase
+PL8	hyaluronate / chondroitin lyase	OK	hyaluronate lyase (4.2.2.1); chondroitin AC lyase (4.2.2.5); heparin, xanthan, chondroitin B lyases	hyaluronate / chondroitin lyase	hyaluronate / chondroitin lyase
+PL9	pectate lyase	OK	pectate lyase (4.2.2.2); exo-unsat. disaccharide pectate lyase (4.2.2.9); pectin lyase; RG lyase	pectate lyase	pectate lyase
+PL10	pectate lyase	OK	pectate lyase (4.2.2.2) only	pectate lyase	pectate lyase
+PL11	rhamnogalacturonan lyase	OK	rhamnogalacturonan lyase (4.2.2.23); exo-unsaturated RG lyase (4.2.2.24)	rhamnogalacturonan lyase	rhamnogalacturonan lyase
+PL12	heparin-sulfate lyase	OK	heparin lyase (4.2.2.7); heparin-sulfate lyase (4.2.2.8)	heparin-sulfate lyase	heparin-sulfate lyase
+PL22	oligogalacturonate lyase	OK	exo-unsaturated pectate lyase (4.2.2.6, = oligogalacturonide lyase); exo-unsat. disaccharide pectate lyase (4.2.2.9)	oligogalacturonate lyase	oligogalacturonate lyase
+CE1	acetyl xylan / feruloyl esterase	FIX	acetylxylan esterase (3.1.1.72); acetylesterase; carboxylic ester hydrolase; DAG O-acyltransferase; trehalose mycolyltransferase; note: many other esterases (e.g. PHB depolymerases). Feruloyl esterase not listed on page	acetyl xylan esterase; diverse other esterases	acetyl xylan esterase and other esterases
+CE3	acetyl xylan esterase	OK	Acetylesterase (3.1.1.6); acetylxylan esterase (3.1.1.72)	acetyl xylan esterase	acetyl xylan esterase
+CE4	polysaccharide deacetylase (chitin, peptidoglycan, xylan)	OK	chitin deacetylase (3.5.1.41); peptidoglycan GlcNAc deacetylase (3.5.1.104); acetylxylan esterase; PNAG/LPS deacetylase	polysaccharide deacetylase (chitin, peptidoglycan, xylan)	polysaccharide deacetylase (chitin, peptidoglycan, xylan)
+CE7	acetyl xylan esterase / cephalosporin-C deacetylase	OK	cephalosporin-C deacetylase (3.1.1.41); acetylxylan esterase (3.1.1.72); b-acetylmannan esterase	acetyl xylan esterase / cephalosporin-C deacetylase	acetyl xylan esterase / cephalosporin-C deacetylase
+CE8	pectin methylesterase	OK	Pectin methylesterase (3.1.1.11) only	pectin methylesterase	pectin methylesterase
+CE9	N-acetylglucosamine-6-phosphate deacetylase	OK	GlcNAc-6-P deacetylase (3.5.1.25); GalNAc-6-P deacetylase	N-acetylglucosamine-6-phosphate deacetylase	N-acetylglucosamine-6-phosphate deacetylase
+CE11	UDP-3-O-acyl-GlcNAc deacetylase (LpxC)	OK	UDP-3-O-acyl N-acetylglucosamine deacetylase (3.5.1.108) only	UDP-3-O-acyl-GlcNAc deacetylase (LpxC)	UDP-3-O-acyl-GlcNAc deacetylase (LpxC)
+CE12	pectin / rhamnogalacturonan acetylesterase	OK	rhamnogalacturonan acetylesterase (3.1.1.86); pectin acetylesterase; acetylxylan esterase; acetylalginate esterase	pectin / rhamnogalacturonan acetylesterase	pectin / rhamnogalacturonan acetylesterase
+CE14	mycothiol biosynthesis deacetylase (MshB)	FIX	GlcNAc-PI deacetylase (3.5.1.89); diacetylchitobiose / chitin disaccharide deacetylase (3.5.1.105/136); GlcNAc deacetylase; mycothiol S-conjugate amidase (3.5.1.115); MshB activity not listed	GlcNAc-PI / chitobiose deacetylase; mycothiol amidase	GlcNAc-PI / chitobiose deacetylase; mycothiol S-conjugate amidase
+CE15	4-O-methyl-glucuronoyl esterase	OK	4-O-methyl-glucuronoyl esterase (EC 3.1.1.117); feruloyl esterase	4-O-methyl-glucuronoyl esterase	4-O-methyl-glucuronoyl esterase
+AA1	laccase / multicopper oxidase	OK	laccase (EC 1.10.3.2); dihydrogeodin oxidase; note: multicopper oxidases (laccases, ferroxidases)	laccase / multicopper oxidase	laccase / multicopper oxidase
+AA2	class II peroxidase	OK	manganese / lignin / versatile peroxidase; note: class II lignin-modifying peroxidases	class II peroxidase	class II peroxidase
+AA3	GMC oxidoreductase	OK	cellobiose dehydrogenase; aryl alcohol oxidase; glucose 1-oxidase; note: GMC oxidoreductases	GMC oxidoreductase	GMC oxidoreductase
+AA4	vanillyl-alcohol oxidase	OK	vanillyl-alcohol oxidase (EC 1.1.3.38)	vanillyl-alcohol oxidase	vanillyl-alcohol oxidase
+AA5	copper radical oxidase	OK	glyoxal oxidase; galactose oxidase; note: copper radical oxidases	copper radical oxidase	copper radical oxidase
+AA6	1,4-benzoquinone reductase	OK	p-benzoquinone reductase (NADPH) (EC 1.6.5.6)	1,4-benzoquinone reductase	1,4-benzoquinone reductase
+AA7	glucooligosaccharide oxidase	OK	gluco-/chito-/xylo-oligosaccharide oxidase; note names glucooligosaccharide oxidases (GOO)	glucooligosaccharide oxidase	glucooligosaccharide oxidase
+AA10	lytic polysaccharide monooxygenase (chitin/cellulose)	OK	lytic chitin monooxygenase; lytic cellulose monooxygenase; lytic xylan monooxygenase	lytic polysaccharide monooxygenase (chitin/cellulose)	lytic polysaccharide monooxygenase (chitin/cellulose)
+CBM1	cellulose-binding	OK	cellulose-binding demonstrated in many cases (fungal); chitin in one case	cellulose-binding	cellulose-binding
+CBM2	cellulose / chitin / xylan-binding	OK	cellulose-binding in many cases; some also bind chitin or xylan	cellulose / chitin / xylan-binding	cellulose / chitin / xylan-binding
+CBM3	cellulose-binding	OK	cellulose-binding in many cases; chitin in one instance	cellulose-binding	cellulose-binding
+CBM4	xylan / glucan-binding	OK	xylan, beta-1,3-/1,3-1,4-/1,6-glucan, amorphous cellulose	xylan / glucan-binding	xylan / glucan-binding
+CBM5	chitin-binding	OK	chitin-binding described in several cases	chitin-binding	chitin-binding
+CBM6	xylan / glucan-binding	OK	amorphous cellulose and beta-1,4-xylan; beta-1,3-/1,3-1,4-/1,4-glucan	xylan / glucan-binding	xylan / glucan-binding
+CBM9	xylan-binding	FIX	found only in xylanases; cellulose-binding demonstrated in one case (no xylan binding stated)	cellulose-binding (in xylanases)	cellulose-binding (in xylanases)
+CBM10	cellulose-binding	OK	cellulose-binding demonstrated in one case	cellulose-binding	cellulose-binding
+CBM12	chitin-binding	OK	mostly in chitinases; function is chitin-binding	chitin-binding	chitin-binding
+CBM13	ricin B-like (xylan / mannose-binding)	OK	ricin-like lectin module; mannose (lectins), xylan (S. lividans enzymes), GalNAc	ricin B-like (xylan / mannose-binding)	ricin B-like (xylan / mannose-binding)
+CBM16	cellulose / glucomannan-binding	OK	binding to cellulose and glucomannan demonstrated	cellulose / glucomannan-binding	cellulose / glucomannan-binding
+CBM20	starch-binding	OK	granular starch-binding; cyclodextrins; starch-binding domains (SBD)	starch-binding	starch-binding
+CBM25	starch-binding	OK	starch-binding demonstrated in one case	starch-binding	starch-binding
+CBM26	starch-binding	OK	starch-binding demonstrated in two cases	starch-binding	starch-binding
+CBM32	galactose / LacNAc-binding	OK	galactose/lactose; LacNAc; polygalacturonic acid (Yersinia)	galactose / LacNAc-binding	galactose / LacNAc-binding
+CBM34	starch-binding	OK	granular starch-binding (T. vulgaris alpha-amylase)	starch-binding	starch-binding
+CBM35	xylan / mannan / glucuronic acid-binding	FIX	xylan (Ca-dependent); decorated mannans/manno-oligosaccharides; beta-galactan (glucuronic acid not listed)	xylan / mannan / beta-galactan-binding	xylan / mannan / β-galactan-binding
+CBM41	α-glucan-binding	OK	amylose, amylopectin, pullulan (pullulanases)	α-glucan-binding	α-glucan-binding
+CBM44	cellulose / xyloglucan-binding	OK	binds cellulose and xyloglucan equally well	cellulose / xyloglucan-binding	cellulose / xyloglucan-binding
+CBM48	glycogen-binding (with GH13)	OK	glycogen-binding, appended to GH13; AMPK beta subunit	glycogen-binding (with GH13)	glycogen-binding (with GH13)
+CBM50	peptidoglycan / chitin-binding (LysM)	OK	LysM; on chitin- or peptidoglycan-cleaving enzymes; chitopentaose binding	peptidoglycan / chitin-binding (LysM)	peptidoglycan / chitin-binding (LysM)
+CBM61	β-1,4-galactan-binding	OK	beta-1,4-galactan binding (T. maritima GH53)	β-1,4-galactan-binding	β-1,4-galactan-binding
+CBM63	cellulose-binding (expansin-like)	OK	B. subtilis expansin EXLX1 module binds cellulose	cellulose-binding (expansin-like)	cellulose-binding (expansin-like)
+CBM66	fructan-binding	OK	targets terminal fructoside of fructans (SacC)	fructan-binding	fructan-binding
+CBM67	L-rhamnose-binding	OK	L-rhamnose binding (S. avermitilis alpha-L-rhamnosidase)	L-rhamnose-binding	L-rhamnose-binding
+CBM73	chitin-binding	OK	chitin-binding (CjLPMO10A); on chitin-active enzymes	chitin-binding	chitin-binding

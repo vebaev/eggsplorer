@@ -1,0 +1,48 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependencies
+        run: |
+          pip install plotly==5.24.1 pandas Cheetah3 playwright planemo
+          playwright install --with-deps chromium
+      - name: Lint Galaxy wrapper
+        run: planemo lint eggsplorer.xml
+      - name: Unit and layout tests
+        run: |
+          python -I tests/test_decoder_core.py
+          python -I tests/test_improvements.py
+          python -I tests/test_report.py
+          python -I tests/test_refdata.py
+          python -I tests/test_go.py
+          python -I tests/test_cell.py
+          python tests/render_galaxy_tests.py
+
+  galaxy:
+    runs-on: ubuntu-latest
+    needs: unit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: planemo test in a temporary Galaxy (conda dependencies)
+        run: |
+          pip install planemo
+          planemo test --conda_auto_init --conda_auto_install eggsplorer.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tool_test_output
+          path: tool_test_output.html
