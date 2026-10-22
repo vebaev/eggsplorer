@@ -82,10 +82,12 @@ def main():
         worst = Path(t) / "worst.emapper.annotations"
         worst_case(worst)
         results = {}
-        for name, src in (("test genome", ROOT / "test-data" / "synthetic.emapper.annotations"), ("worst case", worst)):
-            out = Path(t) / (name.replace(" ", "_") + ".html")
+        for name, src, lang in (("test genome", ROOT / "test-data" / "synthetic.emapper.annotations", "en"),
+                                ("test genome (bg)", ROOT / "test-data" / "synthetic.emapper.annotations", "bg"),
+                                ("worst case", worst, "en"), ("worst case (bg)", worst, "bg")):
+            out = Path(t) / (re.sub(r"\W+", "_", name) + ".html")
             subprocess.run([sys.executable, "-I", str(ROOT / "eggsplorer.py"), "-i", str(src), "-o", str(out),
-                            "--plotly", "cdn"], check=True)
+                            "--plotly", "cdn", "--lang", lang], check=True)
             res = layout(out)
             if res is None:
                 print(msg + "; layout check skipped (Playwright not installed)")

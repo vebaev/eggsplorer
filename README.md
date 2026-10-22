@@ -51,6 +51,10 @@ source of `plotly.min.js` in the default inline mode.
 
 ## Tests
 
+Test dependencies: `pip install plotly==5.24.1 pandas Cheetah3 playwright seaborn matplotlib scipy` and
+`playwright install chromium` (seaborn, matplotlib and scipy are only needed to run the original KEGG-Decoder in
+the equivalence test).
+
 ```bash
 python -I tests/test_decoder_core.py   # identical scores to the original KEGG-Decoder
 python -I tests/test_improvements.py   # KO map, evidence, filters, KofamScan, corrected mode
