@@ -373,6 +373,7 @@ STRINGS = {
     "en": {
         "lang": "en", "title": "Functional profile", "proteins": "proteins",
         "nav_overview": "Overview", "nav_tax": "Taxonomy", "nav_cog": "COG", "nav_go": "GO",
+        "cog_short": {"A": "RNA processing", "B": "Chromatin", "C": "Energy production", "D": "Cell cycle, division", "E": "Amino acid metabolism", "F": "Nucleotide metabolism", "G": "Carbohydrate metabolism", "H": "Coenzyme metabolism", "I": "Lipid metabolism", "J": "Translation", "K": "Transcription", "L": "Replication and repair", "M": "Cell wall and membrane", "N": "Cell motility", "O": "Protein turnover, chaperones", "P": "Inorganic ion transport", "Q": "Secondary metabolites", "R": "General function prediction", "S": "Function unknown", "T": "Signal transduction", "U": "Secretion, vesicles", "V": "Defense mechanisms", "W": "Extracellular structures", "X": "Mobilome", "Y": "Nuclear structure", "Z": "Cytoskeleton"},
         "nav_cell": "Cell overview",
         "cell_title": "Cell overview",
         "cell_note": "Components found in this genome, placed where they act in the cell: respiratory chain on top, uptake systems on the left, secretion and export on the right, the largest transporter families and motility at the bottom, metabolic function groups inside. Colours show completeness, as in Metabolic functions. A component is drawn when its score is at least 0.50; components with fewer genes or none are listed under the drawing.",
@@ -412,6 +413,7 @@ STRINGS = {
         "cog_title": "COG functional categories",
         "cog_note": "Share of proteins with a COG category. A protein with several letters (e.g. 'KT') is counted in each of them.",
         "cog_multi": "proteins with more than one category", "cog_unassigned": "without a COG category",
+        "cog_hover": "Point at a category for its full name, number of proteins and share.",
         "cog_letter": "COG", "cog_cat": "Category", "cog_n": "Proteins", "cog_pct": "%",
         "go_title": "Most frequent GO terms",
         "go_note": "Top 20 terms per ontology among the {n} proteins with GO annotations ({pct} of all). Annotations are mapped to current GO terms and propagated to all parents. Very general terms are hidden (fewer than {d} steps from the root, or marked by GO as not for annotation), and so is any term when a more specific term covers at least {r} of its proteins. This is a frequency profile, not an enrichment test.",
@@ -450,6 +452,7 @@ STRINGS = {
     "bg": {
         "lang": "bg", "title": "Функционален профил", "proteins": "протеина",
         "nav_overview": "Обзор", "nav_tax": "Таксономия", "nav_cog": "COG", "nav_go": "GO",
+        "cog_short": {"A": "Обработка на РНК", "B": "Хроматин", "C": "Енергиен метаболизъм", "D": "Клетъчен цикъл, делене", "E": "Метаболизъм на аминокиселини", "F": "Метаболизъм на нуклеотиди", "G": "Метаболизъм на въглехидрати", "H": "Метаболизъм на коензими", "I": "Метаболизъм на липиди", "J": "Транслация", "K": "Транскрипция", "L": "Репликация и поправка", "M": "Клетъчна стена и мембрана", "N": "Клетъчна подвижност", "O": "Белтъчен оборот, шаперони", "P": "Транспорт на неорганични йони", "Q": "Вторични метаболити", "R": "Обща функционална прогноза", "S": "Неизвестна функция", "T": "Сигнална трансдукция", "U": "Секреция, везикули", "V": "Защитни механизми", "W": "Извънклетъчни структури", "X": "Мобилом", "Y": "Ядрена структура", "Z": "Цитоскелет"},
         "nav_cell": "Клетка",
         "cell_title": "Обзор на клетката",
         "cell_note": "Компонентите, намерени в този геном, разположени там, където действат в клетката: дихателната верига отгоре, системите за поемане вляво, секрецията и изнасянето вдясно, най-големите семейства транспортери и подвижността отдолу, групите метаболитни функции вътре. Цветовете показват пълнотата, както в Метаболитни функции. Компонент се показва при оценка поне 0.50; тези с по-малко гени или без гени са изброени под схемата.",
@@ -489,6 +492,7 @@ STRINGS = {
         "cog_title": "COG функционални категории",
         "cog_note": "Дял от протеините с COG категория. Протеин с няколко букви (напр. „KT“) се брои във всяка от тях.",
         "cog_multi": "протеина с повече от една категория", "cog_unassigned": "без COG категория",
+        "cog_hover": "Посочете категория за пълното ѝ име, броя протеини и дела.",
         "cog_letter": "COG", "cog_cat": "Категория", "cog_n": "Протеини", "cog_pct": "%",
         "go_title": "Най-чести GO термини",
         "go_note": "Топ 20 термина за всяка онтология сред {n} протеина с GO анотация ({pct} от всички). Анотациите са приведени към текущите GO термини и разпространени към всички родители. Скрити са твърде общите термини (по-близо от {d} стъпки до корена или отбелязани от GO като неподходящи за анотация), както и термин, когато по-специфичен термин покрива поне {r} от протеините му. Това е честотен профил, не тест за обогатяване.",

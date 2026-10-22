@@ -77,8 +77,10 @@ select { max-width: 100%; min-width: 0; text-overflow: ellipsis; }
 .seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); font-weight: 500; }
 
 /* COG */
-.cog-layout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; align-items: start; }
-@media (max-width: 900px) { .cog-layout { grid-template-columns: minmax(0, 1fr); } }
+#tbl-genes td.desc { min-width: 300px; }
+#tbl-genes td.list { white-space: normal; max-width: 170px; }
+#tbl-genes td.list span { white-space: nowrap; }
+#tbl-genes td.id { white-space: nowrap; }
 td .letter { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-weight: 500; }
 
 /* functions */
@@ -203,10 +205,8 @@ __PLOTLY__
   <section id="cog">
     <div class="panel">
       <div class="section-head"><h2 data-t="cog_title"></h2><p class="note" id="cog-note"></p><div class="chips" id="cog-legend"></div></div>
-      <div class="cog-layout" style="margin-top: 10px">
-        <div class="chart" id="ch-cog"></div>
-        <div class="table-scroll" style="max-height: 560px"><table id="tbl-cog"></table></div>
-      </div>
+      <div class="chart" id="ch-cog" style="margin-top: 6px"></div>
+      <p class="note" data-t="cog_hover"></p>
     </div>
   </section>
 
@@ -381,27 +381,25 @@ __PLOTLY__
     hbar(x[0], x[1].map(function (r) { return r[0]; }), x[1].map(function (r) { return r[1]; }), css(x[2]));
   });
 
-  /* COG radar */
+  /* COG radar: category names on the axis, full name, count and share in the pop-up */
   var groupVar = { info: "--g-info", cell: "--g-cell", metab: "--g-metab", poor: "--g-poor" };
   var cog = D.cog.filter(function (c) { return c.n > 0; });
-  var theta = cog.map(function (c) { return c.letter; });
+  var cogNarrow = ($("ch-cog").clientWidth || 1000) < 720; // phones: letters only, names stay in the pop-up
+  var theta = cog.map(function (c) { return cogNarrow ? c.letter : c.letter + " · " + ((T.cog_short || {})[c.letter] || c.label); });
+  var pctFmt = function (v) { return v.toLocaleString(loc, { maximumFractionDigits: 1, minimumFractionDigits: 1 }); };
+  var custom = cog.map(function (c) { return [c.label, fmt(c.n), pctFmt(c.pct), D.cog_groups[c.group] || ""]; });
   draw("ch-cog", [{ type: "scatterpolar", r: cog.map(function (c) { return c.pct; }).concat([cog[0] ? cog[0].pct : 0]),
-    theta: theta.concat([theta[0]]), fill: "toself", fillcolor: "rgba(168, 216, 234, 0.35)",
+    theta: theta.concat([theta[0]]), mode: "lines+markers", fill: "toself", fillcolor: "rgba(168, 216, 234, 0.35)", hoveron: "points",
     line: { color: css("--accent"), width: 1.5 },
-    marker: { size: 9, color: cog.map(function (c) { return css(groupVar[c.group]); }).concat([css(groupVar[(cog[0] || {}).group] || "--p1")]),
+    marker: { size: 11, color: cog.map(function (c) { return css(groupVar[c.group]); }).concat([css(groupVar[(cog[0] || {}).group] || "--p1")]),
       line: { color: css("--accent"), width: 1 } },
-    customdata: cog.map(function (c) { return [c.label, c.n]; }).concat([cog[0] ? [cog[0].label, cog[0].n] : ["", 0]]),
-    hovertemplate: "<b>%{theta}</b> · %{customdata[0]}<br>%{customdata[1]} " + T.proteins + " (%{r:.1f}%)<extra></extra>" }],
-    { height: 520, margin: { l: 40, r: 40, t: 30, b: 30 },
+    customdata: custom.concat([custom[0] || ["", 0, 0, ""]]),
+    hovertemplate: "<b>%{customdata[0]}</b><br>%{customdata[3]}<br>%{customdata[1]} " + T.proteins + " · %{customdata[2]}%<extra></extra>" }],
+    { height: cogNarrow ? 420 : 600, margin: cogNarrow ? { l: 30, r: 30, t: 30, b: 30 } : { l: 150, r: 150, t: 40, b: 40 }, hoverlabel: { font: { size: 13 } }, hoverdistance: 40,
       polar: { bgcolor: "rgba(0,0,0,0)", radialaxis: { ticksuffix: "%", gridcolor: css("--line"), linecolor: css("--line"),
         tickfont: { color: css("--muted"), size: 10 }, angle: 90 },
         angularaxis: { gridcolor: css("--line"), linecolor: css("--line"), direction: "clockwise",
-          tickfont: { family: css("--f-mono"), size: 13, color: css("--ink") } } } });
-  $("tbl-cog").innerHTML = "<thead><tr><th>" + esc(T.cog_letter) + "</th><th>" + esc(T.cog_cat) + '</th><th class="num">' +
-    esc(T.cog_n) + '</th><th class="num">' + esc(T.cog_pct) + "</th></tr></thead><tbody>" + cog.map(function (c) {
-      return '<tr><td><span class="letter"><span class="swatch" style="background: var(' + groupVar[c.group] + ')"></span>' + c.letter +
-        "</span></td><td>" + esc(c.label) + '</td><td class="num">' + fmt(c.n) + '</td><td class="num">' +
-        c.pct.toLocaleString(loc, { maximumFractionDigits: 1, minimumFractionDigits: 1 }) + "</td></tr>"; }).join("") + "</tbody>";
+          tickfont: { family: css("--f-body"), size: 12, color: css("--ink") } } } });
   $("cog-legend").innerHTML = Object.keys(D.cog_groups).map(function (g) {
     return '<span class="chip"><span class="swatch" style="background: var(' + groupVar[g] + ')"></span>' + esc(D.cog_groups[g]) + "</span>"; }).join("");
   $("cog-note").textContent = T.cog_note + " " + fmt(C.cog_multi) + " " + T.cog_multi + "; " + fmt(C.cog_unassigned) + " " + T.cog_unassigned + ".";
@@ -895,11 +893,12 @@ __PLOTLY__
   $("gene-prev").textContent = T.table_prev; $("gene-next").textContent = T.table_next;
   $("gene-cog").innerHTML = '<option value="">' + esc(T.table_all) + "</option>" + cog.map(function (c) {
     return '<option value="' + c.letter + '">' + c.letter + " · " + esc(c.label) + "</option>"; }).join("");
-  function cell(i, v) {
+  function cell(i, v) { // 0 ID, 1 gene, 2 description, 3 COG, 4 KO, 5 EC, 6 CAZy, 7 TC, 8 Pfam, 9 level
     if (v === "-" || v === "") { return '<td class="muted">–</td>'; }
-    if (i === 4) { return '<td class="mono">' + v.split(",").map(koLink).join(" ") + "</td>"; }
-    if (i === 0 || i === 3 || i === 5 || i === 6 || i === 7) { return '<td class="mono">' + esc(v) + "</td>"; }
-    if (i === 8) { return '<td class="mono" style="white-space: normal">' + esc(v.split(",").join(", ")) + "</td>"; }
+    if (i === 2) { return '<td class="desc">' + esc(v) + "</td>"; }
+    if (i === 4) { return '<td class="mono list">' + v.split(",").map(function (k) { return "<span>" + koLink(k) + "</span>"; }).join(" ") + "</td>"; }
+    if (i >= 5 && i <= 8) { return '<td class="mono list">' + v.split(",").map(function (x) { return "<span>" + esc(x) + "</span>"; }).join(", ") + "</td>"; }
+    if (i === 0 || i === 3) { return '<td class="mono id">' + esc(v) + "</td>"; }
     return "<td>" + esc(v) + "</td>";
   }
   function renderTable() {
