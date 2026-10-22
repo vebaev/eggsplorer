@@ -9,6 +9,7 @@ Python package (inline mode, the default for Galaxy) or loaded from cdnjs
 from __future__ import annotations
 
 import argparse
+import base64
 import csv
 import datetime as dt
 import html
@@ -538,6 +539,24 @@ def plotly_script(mode):
     return "<script>" + js.replace("</script", "<\\/script") + "</script>"
 
 
+FONTS = [  # family, weight, file in fonts/ (IBM Plex, SIL OFL 1.1, embedded unchanged)
+    ("IBM Plex Sans", 400, "IBMPlexSans-Regular"), ("IBM Plex Sans", 500, "IBMPlexSans-Medium"),
+    ("IBM Plex Sans", 600, "IBMPlexSans-SemiBold"), ("IBM Plex Sans Condensed", 500, "IBMPlexSansCondensed-Medium"),
+    ("IBM Plex Sans Condensed", 600, "IBMPlexSansCondensed-SemiBold"), ("IBM Plex Mono", 400, "IBMPlexMono-Regular"),
+    ("IBM Plex Mono", 500, "IBMPlexMono-Medium"),
+]
+
+
+def font_faces():
+    """@font-face rules with the bundled fonts as data URIs, so the report loads no web fonts."""
+    rules = []
+    for family, weight, name in FONTS:
+        data = base64.b64encode((HERE / "fonts" / f"{name}.woff2").read_bytes()).decode("ascii")
+        rules.append(f"@font-face{{font-family:'{family}';font-style:normal;font-weight:{weight};font-display:swap;"
+                     f"src:url(data:font/woff2;base64,{data}) format('woff2');}}")
+    return "<style>" + "".join(rules) + "</style>"
+
+
 def render(data, strings, plotly_mode, fragment):
     template = (HERE / "report_template.html").read_text(encoding="utf-8")
     shown = {k: v for k, v in data.items() if k not in ("pathways", "modules")}  # pathways/modules go to the tables only
@@ -545,6 +564,7 @@ def render(data, strings, plotly_mode, fragment):
     payload = payload.replace("</", "<\\/")  # safe inside <script>
     page = (template.replace("__TITLE__", html.escape(f'{data["meta"]["sample"]} · {strings["title"]}'))
             .replace("__LANG__", strings["lang"])
+            .replace("__FONTS__", font_faces())
             .replace("__PLOTLY__", plotly_script(plotly_mode))
             .replace("__DATA__", payload))
     if fragment:

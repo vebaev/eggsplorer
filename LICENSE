@@ -22,4 +22,5 @@ SOFTWARE.
 
 Third-party components keep their own licences: KEGG-Decoder (MIT,
 third_party/kegg_decoder/LICENSE), Gene Ontology data (CC BY 4.0,
-refdata_go/NOTICE.md), ENZYME nomenclature (CC BY 4.0, refdata_ec/NOTICE.md).
+refdata_go/NOTICE.md), ENZYME nomenclature (CC BY 4.0, refdata_ec/NOTICE.md),
+IBM Plex fonts (SIL Open Font License 1.1, fonts/OFL.txt).

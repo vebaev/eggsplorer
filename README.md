@@ -1,8 +1,8 @@
 # Eggsplorer
 
 Galaxy tool that turns an eggNOG-mapper `*.emapper.annotations` table into one
-self-contained, interactive HTML report. It runs offline: plotly.js is embedded
-and no database is queried.
+self-contained, interactive HTML report. It runs offline: plotly.js and the IBM Plex fonts are embedded,
+the report makes no network requests, and no database is queried.
 
 ## What the report shows
 
@@ -27,6 +27,7 @@ Allowlist*) for the report to work inside Galaxy. A downloaded report always wor
 | `eggsplorer.xml`, `macros.xml` | Galaxy wrapper |
 | `eggsplorer.py` | parses the annotations, computes summaries, writes HTML and TSV tables |
 | `report_template.html` | page layout, styles and charts (Plotly) |
+| `fonts/` | IBM Plex fonts (SIL OFL 1.1), embedded unchanged in every report |
 | `refdata.py` | static reference tables: COG categories, EC classes, TC subclasses and families, CAZy classes and families, layout groups |
 | `refdata_checks/` | review of every bundled CAZy and TC name against its CAZy or TCDB page (October 2026): evidence, verdict, final label |
 | `refdata_cazy/` | CAZy family → substrate groups derived from dbCAN-sub by `scripts/build_cazy_substrates.py`, with provenance |
@@ -68,7 +69,7 @@ planemo test eggsplorer.xml
 ## Licences and citations
 
 Tool code: MIT (see `LICENSE`). KEGG-Decoder: MIT, Copyright (c) 2019 Benjamin Tully.
-Gene Ontology and ENZYME data: CC BY 4.0 (see the `NOTICE.md` files).
+Gene Ontology and ENZYME data: CC BY 4.0; IBM Plex fonts: SIL OFL 1.1 (see the `NOTICE.md` files).
 Cite eggNOG-mapper (Cantalapiedra et al. 2021), KEGG-Decoder (Graham et al. 2018)
 and KEGG (Kanehisa & Goto 2000) when using the report; the CAZy-by-substrate chart uses dbCAN-sub (Zheng et al. 2023). KEGG names are not
 bundled; KO identifiers link to the KEGG website.

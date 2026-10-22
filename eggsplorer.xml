@@ -92,6 +92,8 @@ python '$__tool_directory__/eggsplorer.py'
                     <has_text text="plotly.js v2.35.2"/>
                     <has_text text="&quot;proteins&quot;:300"/>
                     <not_has_text text="cdnjs.cloudflare.com/ajax/libs/plotly"/>
+                    <not_has_text text="fonts.googleapis.com"/>
+                    <has_text text="font-family:'IBM Plex Sans'"/>
                 </assert_contents>
             </output>
         </test>

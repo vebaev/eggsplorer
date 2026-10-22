@@ -75,6 +75,25 @@ def layout(report):
     return res
 
 
+def offline(report):
+    """The default (inline) report must make no network requests and use the embedded fonts."""
+    from playwright.sync_api import sync_playwright
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
+        external = []
+        page.on("request", lambda r: external.append(r.url) if not r.url.startswith(("file:", "data:", "blob:")) else None)
+        page.goto(Path(report).as_uri())
+        page.wait_for_function("window.__cellQA !== undefined", timeout=20000)
+        page.evaluate("document.fonts.ready.then(() => 1)")
+        fonts = page.evaluate("['IBM Plex Sans', 'IBM Plex Sans Condensed', 'IBM Plex Mono'].map(f => document.fonts.check('600 12px \"' + f + '\"') || document.fonts.check('12px \"' + f + '\"'))")
+        loaded = page.evaluate("[...document.fonts].filter(f => f.status === 'loaded').map(f => f.family)")
+        browser.close()
+    assert not external, external
+    assert all(fonts) and loaded, (fonts, loaded)
+    return len(loaded)
+
+
 def main():
     n_fn, n_ko = check_rules()
     msg = f"OK: cell rules use {n_fn} known functions and {n_ko} listed KOs"
@@ -96,7 +115,12 @@ def main():
             for cid, c in res["cycles"].items():
                 assert c["overlaps"] == 0 and c["outside"] == 0, (name, cid, c)
             results[name] = res["labels"]
-    print(msg + "; layout clean for " + ", ".join(f"{k} ({v} labels)" for k, v in results.items()))
+        inline = Path(t) / "inline.html"
+        subprocess.run([sys.executable, "-I", str(ROOT / "eggsplorer.py"), "-i",
+                        str(ROOT / "test-data" / "synthetic.emapper.annotations"), "-o", str(inline)], check=True)
+        n_fonts = offline(inline)
+    print(msg + "; layout clean for " + ", ".join(f"{k} ({v} labels)" for k, v in results.items())
+          + f"; inline report makes no network requests and uses {n_fonts} embedded font faces")
 
 
 if __name__ == "__main__":
