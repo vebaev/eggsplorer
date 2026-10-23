@@ -36,6 +36,7 @@ Allowlist*) for the report to work inside Galaxy. A downloaded report always wor
 | `decoder_core.py` | metabolic function scoring with the KEGG-Decoder logic, evidence, KofamScan support |
 | `third_party/kegg_decoder/` | unmodified KEGG-Decoder v1.3 (MIT), its licence, provenance notes and the derived KO map |
 | `test-data/` | synthetic 300-protein test genome and KofamScan file, written by `scripts/make_test_data.py` (not a real genome) |
+| `test-data/validation/` | KO assignments of ten public reference genomes used by `tests/test_validation.py` |
 | `tests/` | equivalence with KEGG-Decoder, checks of the additions, cross-check of report numbers with pandas, layout checks of the SVG figures |
 | `.github/workflows/ci.yml` | runs the tests, `planemo lint` and `planemo test` on every push |
 
@@ -63,6 +64,7 @@ python -I tests/test_report.py         # report numbers vs an independent pandas
 python -I tests/test_refdata.py        # bundled CAZy/TC names and CAZy substrate groups are consistent
 python -I tests/test_go.py             # GO counts verified top-down, independent of go_core
 python -I tests/test_cell.py           # cell overview rules; layout check in Chromium (test genome and worst case)
+python -I tests/test_validation.py     # cell and cycles on ten reference genomes with known biology (test-data/validation)
 planemo test eggsplorer.xml
 ```
 
@@ -76,6 +78,13 @@ bundled; KO identifiers link to the KEGG website.
 
 ## Changes
 
+- **1.1.0**: checked against ten reference genomes (`test-data/validation`, `tests/test_validation.py`).
+  Cell: diderm envelope from BamA with LpxC or LptD; NDH-1 includes the cyanobacterial ndh complex and the fused
+  nuoCD gene (corrected score); b6f in the respiratory chain; a component whose genes all belong to a better-scoring
+  one is not drawn; methanogenesis needs mcrABG; tiles of alternative systems name the systems found; competence slot.
+  Cycles: DNRA needs NrfA, otherwise nitrite and nitrate assimilation; catalytic subunits required (pale otherwise);
+  serine pathway needs mcl; new RuMP arrow; steps on the same proteins are dashed and reported across diagrams
+  (amo/pmo); gene counts of KO-based components fixed.
 - **1.0.1**: sulfur diagram shows sulfate assimilation (sat or cysDN, cysH, cysJI or sir; KEGG module M00176) as
   inner arrows beside the dissimilatory pathway; TsdA and DoxDA lead to tetrathionate, Sox to sulfate; steps that rest
   on the same proteins in a genome are listed under the diagrams. Metabolic function scores are unchanged.

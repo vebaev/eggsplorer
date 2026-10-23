@@ -27,6 +27,7 @@ jobs:
           python -I tests/test_refdata.py
           python -I tests/test_go.py
           python -I tests/test_cell.py
+          python -I tests/test_validation.py
           python tests/render_galaxy_tests.py
 
   galaxy:

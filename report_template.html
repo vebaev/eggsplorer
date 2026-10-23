@@ -144,6 +144,7 @@ footer .wrap { padding-block: 20px 28px; display: grid; gap: 8px; color: var(--m
 .cy-e { fill: none; stroke-linecap: round; }
 .cy-e-full { stroke: #3f9a50; stroke-width: 4.5; } .cy-e-mid { stroke: var(--s4); stroke-width: 3.5; } .cy-e-low { stroke: var(--s3); stroke-width: 3; }
 .cy-e-abs, .cy-e-na { stroke: #c3ccc9; stroke-width: 1.6; stroke-dasharray: 5 4; }
+.cy-e-shared { stroke-dasharray: 10 6; stroke-linecap: butt; }
 .cy-m-full { fill: #3f9a50; } .cy-m-mid { fill: var(--s4); } .cy-m-low { fill: var(--s3); } .cy-m-abs, .cy-m-na { fill: #c3ccc9; }
 .cy-node circle, .cy-node rect { fill: #fff; stroke: var(--ink); stroke-width: 1.4; }
 .cy-node text { font-size: 13px; font-weight: 600; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
@@ -252,7 +253,7 @@ __PLOTLY__
     <div class="grid-2">
       <div class="panel"><h3 data-t="cy_n"></h3><svg id="cy-n" viewBox="-50 0 620 470" role="img"></svg></div>
       <div class="panel"><h3 data-t="cy_s"></h3><svg id="cy-s" viewBox="-50 0 670 470" role="img"></svg></div>
-      <div class="panel"><h3 data-t="cy_c"></h3><svg id="cy-c" viewBox="-50 0 620 470" role="img"></svg></div>
+      <div class="panel"><h3 data-t="cy_c"></h3><svg id="cy-c" viewBox="-50 0 670 470" role="img"></svg></div>
       <div class="panel" style="align-content: start"><h3 data-t="cy_read_t"></h3><p class="note" data-t="cy_read"></p>
         <div class="cy-caveat" data-t="cy_caveat"></div><p class="note" id="cy-shared" hidden></p></div>
     </div>
@@ -598,13 +599,15 @@ __PLOTLY__
   /* Cell overview: fixed template; only components found are drawn, centred in their zone.
      Each zone holds the whole template, so the drawing cannot overflow. */
   (function () {
-    var EVc = D.decoder.evidence, KO = (D.cell || {}).kos || {}, NSs = "http://www.w3.org/2000/svg", svg = $("ce-svg");
+    var EVc = D.decoder.evidence, KO = (D.cell || {}).kos || {}, CK = (D.cycles || {}).kos || {}, NSs = "http://www.w3.org/2000/svg", svg = $("ce-svg");
+    function nko(k) { var v = KO[k] || CK[k] || []; return typeof v === "number" ? v : v.length; }
     if (!svg) { return; }
     function E(tag, at, parent, txt) { var e = document.createElementNS(NSs, tag); for (var k in at) { e.setAttribute(k, at[k]); }
       if (txt != null) { e.textContent = txt; } if (parent) { parent.appendChild(e); } return e; }
-    var RESP = [["NDH-1", { fn: "NADH-quinone oxidoreductase" }], ["NDH-2", { ko: ["K03885"] }],
+    // NDH-1: nuo (most bacteria) or ndh (cyanobacteria); b6f stands in for bc1 in the cyanobacterial respiratory chain
+    var RESP = [["NDH-1", { any: [{ fn: "NADH-quinone oxidoreductase" }, { fn: "NAD(P)H-quinone oxidoreductase" }] }], ["NDH-2", { ko: ["K03885"] }],
       ["Na-NQR", { fn: "Na-NADH-ubiquinone oxidoreductase" }], ["SDH / FRD", { ko: ["K00239", "K00240", "K00241", "K00242"] }],
-      ["bc1 / bcc", { any: [{ fn: "Ubiquinol-cytochrome c reductase" }, { ko: ["K03886", "K03887", "K03888"] }, { ko: ["K03889", "K03890", "K03891"] }] }], ["aa3 oxidase", { fn: "Cytochrome c oxidase" }],
+      ["bc1 / bcc", { any: [{ fn: "Ubiquinol-cytochrome c reductase" }, { ko: ["K03886", "K03887", "K03888"] }, { ko: ["K03889", "K03890", "K03891"] }] }], ["b6f", { fn: "Cytochrome b6/f complex" }], ["aa3 oxidase", { fn: "Cytochrome c oxidase" }],
       ["cbb3 oxidase", { fn: "Cytochrome c oxidase, cbb3-type" }], ["bo3 oxidase", { fn: "Cytochrome o ubiquinol oxidase" }],
       ["bd oxidase", { fn: "Cytochrome bd complex" }], ["aa3-600 oxidase", { fn: "Cytochrome aa3-600 menaquinol oxidase" }],
       ["F-type ATPase", { fn: "F-type ATPase" }], ["V-type ATPase", { fn: "V-type ATPase" }]];
@@ -619,18 +622,25 @@ __PLOTLY__
       ["T5SS", { fn: "Type Vabc Secretion" }], ["T6SS", { fn: "Type VI Secretion" }], ["Cu⁺ export (CopA)", { fn: "Copper transporter CopA" }],
       ["arsenic (ars)", { fn: "Arsenic reduction" }]];
     var SURF = [["flagellum", { fn: "Flagellum" }], ["chemotaxis", { fn: "Chemotaxis" }],
-      ["adhesion / curli", { best: ["Adhesion", "Curli fimbriae biosynthesis"] }]];
+      ["adhesion / curli", { best: ["Adhesion", "Curli fimbriae biosynthesis"] }],
+      // com genes as defined by Graham et al. are of the Bacillus type; a few homologues are common, so low scores are not listed
+      ["competence (com)", { fn: "Competence-related core components", quiet: true }]];
     var ON_MEMBRANE = { energy: 1, transport: 1, secretion: 1, surface: 1 };
     var ENVELOPE = ["K02535", "K04744", "K07277"];
     var TC_SHOWN = /^(3\.D\.|3\.A\.2$|3\.A\.5$|2\.A\.64$|3\.A\.(6|7|15|20)$|1\.B\.(14|17)$)/;
     function score(n) { return EVc[n] ? EVc[n].score_corrected : null; }
     function genes(n) { return EVc[n] && typeof EVc[n].genes === "number" ? EVc[n].genes : 0; }
+    function ids(n) { var set = {}; ((EVc[n] || {}).found || []).forEach(function (f) { (f.genes || []).forEach(function (x) { set[x] = 1; }); });
+      return Object.keys(set); }
     function evaluate(rule) {
       if (rule.any) { return rule.any.map(evaluate).reduce(function (a, b) { return (b.s || 0) > (a.s || 0) ? b : a; }); }
-      if (rule.fn) { return { s: score(rule.fn), g: genes(rule.fn) }; }
-      if (rule.best) { var b = { s: null, g: 0 }; rule.best.forEach(function (f) { var v = score(f); if (v !== null && (b.s === null || v > b.s)) { b = { s: v, g: genes(f) }; } }); return b; }
-      var hit = rule.ko.filter(function (k) { return KO[k] > 0; });
-      return { s: hit.length / rule.ko.length, g: Math.max.apply(null, rule.ko.map(function (k) { return KO[k] || 0; })) };
+      if (rule.fn) { return { s: score(rule.fn), g: genes(rule.fn), ids: ids(rule.fn) }; }
+      if (rule.best) { var b = { s: null, g: 0, ids: [] }; rule.best.forEach(function (f) { var v = score(f);
+        if (v !== null && (b.s === null || v > b.s)) { b = { s: v, g: genes(f), ids: ids(f) }; } }); return b; }
+      var hit = rule.ko.filter(function (k) { return nko(k) > 0; }), set = {};
+      hit.forEach(function (k) { (Array.isArray(KO[k]) ? KO[k] : []).forEach(function (x) { set[x] = 1; }); });
+      var g = Object.keys(set);
+      return { s: hit.length / rule.ko.length, g: g.length, ids: g };
     }
     function cls(s) { return s >= 1 ? "ce-full" : s >= 0.5 ? "ce-mid" : "ce-low"; }
     function scs(s) { return s.toFixed(2); }
@@ -650,12 +660,23 @@ __PLOTLY__
     function place(n, capacity, start, pitch) { var off = (capacity - n) * pitch / 2, out = [];
       for (var i = 0; i < n; i++) { out.push(start + off + i * pitch); } return out; }
     // drawn: score >= 0.50; a lower score means only a few genes of the system were found
-    var DRAW_MIN = 0.5, missing = { resp: [], up: [], ex: [], surf: [], groups: [] }, fragments = [];
-    function found(list, key) { return list.map(function (r) { return { name: r[0], v: evaluate(r[1]) }; })
-      .filter(function (it) { if (it.v.s >= DRAW_MIN) { return true; }
-        if (it.v.s > 0) { fragments.push(it.name + " " + scs(it.v.s)); } else { missing[key].push(it.name); } return false; }); }
+    var DRAW_MIN = 0.5, missing = { resp: [], up: [], ex: [], surf: [], groups: [], shared: [] }, fragments = [];
+    function found(list, key) {
+      var items = list.map(function (r) { return { name: r[0], v: evaluate(r[1]), quiet: r[1].quiet }; })
+        .filter(function (it) { if (it.v.s >= DRAW_MIN) { return true; }
+          if (it.v.s > 0) { if (!it.quiet) { fragments.push(it.name + " " + scs(it.v.s)); } } else { missing[key].push(it.name); } return false; });
+      // a component whose genes all belong to a better-scoring one (one gene, several KOs) is not drawn
+      var order = items.slice().sort(function (a, b) { return b.v.s - a.v.s; }), kept = [];
+      order.forEach(function (it) {
+        var ids = it.v.ids || [], over = null;
+        kept.forEach(function (k) { if (!over && ids.length) { var n = ids.filter(function (x) { return (k.v.ids || []).indexOf(x) >= 0; }).length;
+          if (n === ids.length) { over = k; } } });
+        if (over) { missing.shared.push(it.name + " " + scs(it.v.s) + " = " + over.name); it.drop = true; } else { kept.push(it); } });
+      return items.filter(function (it) { return !it.drop; });
+    }
 
-    var diderm = ENVELOPE.every(function (k) { return KO[k] > 0; });
+    // outer membrane: BamA together with LPS synthesis (LpxC) or transport (LptD); one marker can be missed by annotation
+    var envFound = ENVELOPE.filter(function (k) { return nko(k) > 0; }), diderm = nko("K07277") > 0 && (nko("K02535") > 0 || nko("K04744") > 0);
     if (diderm) { rr(P + 8, "ce-peri"); rr(P + 8, "ce-membrane"); rr(P + 16, "ce-mline"); rr(P, "ce-mline"); }
     else { rr(P / 2 + 4, "ce-wall", { "stroke-width": P }); rr(P + 4, "ce-wall-line"); }
     rr(0, "ce-cyto"); rr(0, "ce-membrane"); rr(8, "ce-mline"); rr(-8, "ce-mline");
@@ -694,12 +715,35 @@ __PLOTLY__
       label(g, x - 4, bot + out + 10, it.name, scs(it.v.s), "start", 40); });
 
     var tiles = [];
+    // groups of alternative systems: the tile names the systems found instead of counting the ones a genome cannot all have
+    var SHORT = { photo: { "Photosystem II": "PSII", "Photosystem I": "PSI", "Cytochrome b6/f complex": "b6f",
+        "anoxygenic type-II reaction center": "RC-II", "anoxygenic type-I reaction center": "RC-I" },
+      fixation: { "CBB Cycle": "CBB", "rTCA Cycle": "rTCA", "Wood-Ljungdahl": "WL", "3-Hydroxypropionate Bicycle": "3-HP",
+        "4-Hydroxybutyrate/3-hydroxypropionate": "HP/HB", "Serine pathway/formaldehyde assimilation": "serine",
+        "Soluble methane monooxygenase": "sMMO", "methanol dehydrogenase": "MDH", "alcohol oxidase": "AOX",
+        "dimethylamine/trimethylamine dehydrogenase": "DMA-DH" },
+      hydrogen: { "NiFe hydrogenase": "NiFe", "ferredoxin hydrogenase": "FeFe", "membrane-bound hydrogenase": "Mbh",
+        "hydrogen:quinone oxidoreductase": "HQO", "NAD-reducing hydrogenase": "Hox", "NADP-reducing hydrogenase": "Hnd",
+        "NiFe hydrogenase Hyd-1": "Hyd-1" } };
+    // a group is drawn only with its key enzyme: methyl-coenzyme M reductase for methanogenesis
+    var GATE = { methano: { fn: "Coenzyme M reduction to methane", label: "mcrABG" } };
+    function tileScore(f) { var v = score(f);
+      if (f === "CBB Cycle") { v = Math.min(v || 0, score("RuBisCo") || 0); }  // CBB needs RuBisCO, the rest is shared with glycolysis
+      if (f === "Serine pathway/formaldehyde assimilation" && !nko("K08691")) { v = Math.min(v || 0, 0.49); }  // needs malyl-CoA lyase
+      return v; }
     D.decoder.groups.filter(function (gr) { return !ON_MEMBRANE[gr.key]; }).forEach(function (gr) {
-      var vals = gr.functions.map(function (f) { return score(f); });
+      var vals = gr.functions.map(function (f) { return tileScore(f); });
       var full = vals.filter(function (v) { return v !== null && v >= 1; }).length, part = vals.filter(function (v) { return v !== null && v > 0 && v < 1; }).length;
       var name = (T.cell_tiles || {})[gr.key] || gr.label, top = Math.max.apply(null, vals.map(function (v) { return v || 0; }));
+      var gate = GATE[gr.key];
+      if (gate && top > 0 && (score(gate.fn) || 0) < DRAW_MIN) { fragments.push(name + " " + scs(top) + " (" + T.cell_without.replace("{g}", gate.label) + ")"); return; }
       if (top < DRAW_MIN) { if (top > 0) { fragments.push(name + " " + scs(top)); } else { missing.groups.push(name); } return; }
-      tiles.push({ gr: gr, name: name, full: full, part: part });
+      var named = null;
+      if (SHORT[gr.key]) { named = gr.functions.filter(function (f, i) { return SHORT[gr.key][f] && vals[i] >= DRAW_MIN; }).map(function (f) { return SHORT[gr.key][f]; });
+        if (gr.key === "fixation" && ((nko("K08093") && nko("K08094")) || nko("K13812") || nko("K13831"))) { named.push("RuMP"); }
+        if (named.length > 3) { named = named.slice(0, 3).concat(["+" + (named.length - 3)]); }
+        if (!named.length) { named = null; } }
+      tiles.push({ gr: gr, name: name, full: full, part: part, named: named });
     });
     var nT = tiles.length + 1, rows = Math.ceil(nT / 3), ty0 = 262 + (5 - rows) * 31;
     function cell(k) { var row = Math.floor(k / 3), inRow = Math.min(3, nT - row * 3);
@@ -707,15 +751,16 @@ __PLOTLY__
     tiles.forEach(function (t, k) { var p = cell(k), frac = t.full / t.gr.functions.length, g = E("g", { "class": "ce-tile" }, svg);
       E("rect", { x: p.x - 81, y: p.y - 22, width: 162, height: 44, rx: 7, "class": "ce-slot " + (frac >= 0.75 ? "ce-full" : frac >= 0.4 ? "ce-mid" : "ce-low") }, g);
       E("text", { "class": "t1", x: p.x, y: p.y - 3, "text-anchor": "middle" }, g, t.name);
-      E("text", { "class": "t2", x: p.x, y: p.y + 12, "text-anchor": "middle" }, g,
+      E("text", { "class": "t2", x: p.x, y: p.y + 12, "text-anchor": "middle" }, g, t.named ? t.named.join(" · ") :
         t.full + "/" + t.gr.functions.length + " " + T.cell_complete + (t.part ? ", " + t.part + " " + T.cell_partial : ""));
       E("title", {}, g, t.gr.label); });
     var pe = cell(tiles.length), eg = E("g", { "class": "ce-tile" }, svg);
     E("rect", { x: pe.x - 81, y: pe.y - 22, width: 162, height: 44, rx: 7, fill: diderm ? "#f7faf9" : "#efe6d2", stroke: "rgba(29,42,44,0.25)" }, eg);
     E("text", { "class": "t1", x: pe.x, y: pe.y - 3, "text-anchor": "middle" }, eg, diderm ? T.cell_diderm : T.cell_monoderm);
-    E("text", { "class": "t2", x: pe.x, y: pe.y + 12, "text-anchor": "middle" }, eg, diderm ? T.cell_diderm_s : T.cell_monoderm_s);
+    var envNames = { K02535: "lpxC", K04744: "lptD", K07277: "bamA" };
+    E("text", { "class": "t2", x: pe.x, y: pe.y + 12, "text-anchor": "middle" }, eg, diderm ? envFound.map(function (k) { return envNames[k]; }).join(" · ") : T.cell_monoderm_s);
 
-    var heads = { resp: T.cell_nf_resp, up: T.cell_nf_up, ex: T.cell_nf_ex, surf: T.cell_nf_surf, groups: T.cell_nf_groups, frag: T.cell_frag };
+    var heads = { resp: T.cell_nf_resp, up: T.cell_nf_up, ex: T.cell_nf_ex, surf: T.cell_nf_surf, groups: T.cell_nf_groups, frag: T.cell_frag, shared: T.cell_nf_shared };
     missing.frag = fragments;
     var anyMissing = Object.keys(heads).some(function (k) { return missing[k].length; });
     $("ce-nf").innerHTML = '<span class="eyebrow">' + esc(T.cell_nf) + "</span>" + (anyMissing ? Object.keys(heads).filter(function (k) { return missing[k].length; })
@@ -764,7 +809,21 @@ __PLOTLY__
     var cysN = has("K00956") || has("K00955"), cysC = has("K00860") || has("K00955");
     var ATPS = kos(["K00958", "K00957", "K00956", "K00955"], has("K00958") || (has("K00957") && cysN) ? 1 : has("K00957") || cysN ? 0.5 : 0);
     var APSR = kos(cysC ? ["K00390", "K00860", "K00955"] : ["K00390"], has("K00390") ? 1 : 0);
-    var EDGES = {};
+    // a step whose catalytic subunit is missing is drawn pale, whatever its score
+    function core(st, list, lab) { if (st.s > 0 && !list.some(has)) { st.nocore = lab; } return st; }
+    // nitrogen: respiratory DNRA needs NrfA; NirBD / NirA alone, and NasA / NarB alone, are assimilation
+    var nirBD = has("K00362") && has("K00363"), nirAny = has("K00362") || has("K00363") || has("K00366");
+    var DNRA = has("K03385") ? { name: ["DNRA", "DNRA"], genes: "nrfAH", score: kos(["K03385", "K15876"], 1) }
+      : nirAny ? { name: ["NO₂⁻ assimilation", "асимилация на NO₂⁻"], genes: "nirBD / nirA", score: kos(["K00362", "K00363", "K00366"], nirBD || has("K00366") ? 1 : 0.5) }
+      : { name: ["DNRA", "DNRA"], genes: "nrfAH", score: { s: 0, g: 0, ids: [] } };
+    var NAR = core(S("dissim nitrate reduction"), ["K00370", "K02567"], "narG / napA");
+    var NO3R = NAR.s > 0 || !(has("K00372") || has("K00367") || has("K10534"))
+      ? { name: ["NO₃⁻ reduction", "редукция на NO₃⁻"], genes: "narGH / napAB", score: NAR }
+      : { name: ["NO₃⁻ assimilation", "асимилация на NO₃⁻"], genes: "nasA / narB", score: kos(["K00372", "K00367", "K10534"], 1) };
+    // C1: methanogenesis needs methyl-coenzyme M reductase; the serine cycle needs malyl-CoA lyase; RuMP needs Hps and Phi
+    var RUMP = kos(["K08093", "K08094", "K13812", "K13831"], (has("K08093") && has("K08094")) || has("K13812") || has("K13831") ? 1 : has("K08093") || has("K08094") ? 0.5 : 0);
+    if (RUMP.s > 0 && RUMP.s < 1) { RUMP.nocore = has("K08093") ? "hxlB" : "hxlA"; }
+    var EDGES = {}, PATHS = {};
     function cls(s) { return s === null ? "na" : s <= 0 ? "abs" : s < 0.5 ? "low" : s < 1 ? "mid" : "full"; }
     function fmtS(v) { return v === null ? T.cy_na : v <= 0 ? T.cy_absent : v.toFixed(2); }
     function towards(p, q, d) { var dx = q.x - p.x, dy = q.y - p.y, l = Math.hypot(dx, dy) || 1; return { x: p.x + dx / l * d, y: p.y + dy / l * d }; }
@@ -787,6 +846,7 @@ __PLOTLY__
       keys.forEach(function (k) { cx += nodes[k].x; cy += nodes[k].y; }); cx /= keys.length; cy /= keys.length;
       edges.forEach(function (e) {
         var A = nodes[e.from], B = nodes[e.to], st = e.score, c = cls(st.s);
+        if (st.nocore && st.s > 0) { c = "low"; }
         var dx = B.x - A.x, dy = B.y - A.y, L = Math.hypot(dx, dy), nx = -dy / L, ny = dx / L, bend = e.bend || 0;
         if (e.side) { var mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2, sign = (mx - cx) * nx + (my - cy) * ny >= 0 ? 1 : -1;
           bend = Math.abs(bend) * (e.side === "out" ? sign : -sign); }
@@ -797,10 +857,13 @@ __PLOTLY__
         if (e.both) { p.setAttribute("marker-start", "url(#" + id + "-" + c + ")"); }
         var P = { x: 0.25 * s0.x + 0.5 * C.x + 0.25 * t0.x + (e.lo ? e.lo[0] : 0), y: 0.25 * s0.y + 0.5 * C.y + 0.25 * t0.y + (e.lo ? e.lo[1] : 0) };
         var t2 = st.s > 0 ? fmtS(st.s) + " · " + st.g + " " + (st.g === 1 ? T.cy_gene : T.cy_genes) : fmtS(st.s);
+        if (st.nocore && st.s > 0) { t2 += " · " + T.cy_nocore.replace("{k}", st.nocore); }
         var name = BG ? e.name[1] : e.name[0];
-        label(lL, P.x, P.y, name, (e.genes ? e.genes + " · " : "") + t2, !(st.s > 0), e.oneLine);
+        // a pale step without its catalytic subunit names that subunit instead of the gene list (kept in the tooltip)
+        label(lL, P.x, P.y, name, (e.genes && !(st.nocore && st.s > 0) ? e.genes + " · " : "") + t2, !(st.s > 0), e.oneLine);
         E("title", {}, p, name + (e.genes ? " (" + e.genes + ")" : "") + ": " + t2);
-        (EDGES[id] = EDGES[id] || []).push({ name: name, s: st.s, g: st.g, ids: st.ids || [] });
+        (EDGES[id] = EDGES[id] || []).push({ key: e.name[0], name: name, s: st.s, g: st.g, ids: st.ids || [], nocore: st.nocore || "" });
+        (PATHS[id] = PATHS[id] || []).push(p);
       });
       keys.forEach(function (k) {
         var n = nodes[k], g = E("g", { "class": "cy-node" }, lN);
@@ -814,15 +877,15 @@ __PLOTLY__
       NO3: { x: 446, y: 374, r: 28, t: "NO₃⁻" }, NO2: { x: 268, y: 400, r: 28, t: "NO₂⁻" },
       NH2OH: { x: 96, y: 340, r: 33, t: "NH₂OH" }, NH4: { x: 80, y: 182, r: 28, t: "NH₄⁺" }
     }, [
-      { from: "N2", to: "NH4", name: ["N₂ fixation", "фиксация на N₂"], genes: "nifHDK", score: S("nitrogen fixation"), side: "out", bend: 45 },
+      { from: "N2", to: "NH4", name: ["N₂ fixation", "фиксация на N₂"], genes: "nifHDK", score: core(S("nitrogen fixation"), ["K02586"], "nifD"), side: "out", bend: 45 },
       { from: "NH4", to: "NH2OH", name: ["NH₃ oxidation", "окисление на NH₃"], genes: "amoABC", score: S("ammonia oxidation (amo/pmmo)"), side: "out", bend: 32, lo: [-6, 0] },
       { from: "NH2OH", to: "NO2", name: ["NH₂OH oxidation", "окисление на NH₂OH"], genes: "hao", score: S("hydroxylamine oxidation"), side: "out", bend: 32, lo: [0, 4] },
-      { from: "NO2", to: "NO3", name: ["NO₂⁻ oxidation", "окисление на NO₂⁻"], genes: "nxrAB", score: S("nitrite oxidation"), side: "out", bend: 30, lo: [0, 22] },
-      { from: "NO3", to: "NO2", name: ["NO₃⁻ reduction", "редукция на NO₃⁻"], genes: "narGH / napAB", score: S("dissim nitrate reduction"), side: "in", bend: 30, lo: [-44, -26] },
+      { from: "NO2", to: "NO3", name: ["NO₂⁻ oxidation", "окисление на NO₂⁻"], genes: "nxrAB", score: core(S("nitrite oxidation"), ["K00370"], "nxrA"), side: "out", bend: 30, lo: [0, 22] },
+      { from: "NO3", to: "NO2", name: NO3R.name, genes: NO3R.genes, score: NO3R.score, side: "in", bend: 30, lo: [-44, -26] },
       { from: "NO2", to: "NO", name: ["NO₂⁻ reduction", "редукция на NO₂⁻"], genes: "nirK / nirS", score: S("nitrite reduction"), side: "in", bend: 30, lo: [-30, -30] },
-      { from: "NO", to: "N2O", name: ["NO reduction", "редукция на NO"], genes: "norBC", score: S("nitric oxide reduction"), side: "out", bend: 28, lo: [8, 0] },
+      { from: "NO", to: "N2O", name: ["NO reduction", "редукция на NO"], genes: "norBC", score: core(S("nitric oxide reduction"), ["K04561"], "norB"), side: "out", bend: 28, lo: [8, 0] },
       { from: "N2O", to: "N2", name: ["N₂O reduction", "редукция на N₂O"], genes: "nosZ", score: S("nitrous-oxide reduction"), side: "out", bend: 26, lo: [6, -6] },
-      { from: "NO2", to: "NH4", name: ["DNRA", "DNRA"], genes: "nirBD / nrfAH", score: S("DNRA"), side: "in", bend: 22, lo: [-34, 14] },
+      { from: "NO2", to: "NH4", name: DNRA.name, genes: DNRA.genes, score: DNRA.score, side: "in", bend: 22, lo: [-34, 14] },
       { from: "NH4", to: "N2", name: ["anammox", "анамокс"], genes: "hzsABC + hdh", score: allOf(["hydrazine synthase", "hydrazine dehydrogenase"]), side: "in", bend: 46, lo: [24, 10] }
     ]);
     cycle("cy-s", {
@@ -831,18 +894,18 @@ __PLOTLY__
       S4O6: { x: 580, y: 42, r: 33, t: "S₄O₆²⁻" }
     }, [
       { from: "SO4", to: "APS", name: ["sulfate ⇄ APS", "сулфат ⇄ APS"], genes: "sat", score: S("dissimilatory sulfate < > APS"), side: "out", bend: 30, both: true, lo: [-8, -4] },
-      { from: "APS", to: "SO3", name: ["APS ⇄ sulfite", "APS ⇄ сулфит"], genes: "aprAB", score: S("dissimilatory sulfite < > APS"), side: "out", bend: 26, both: true, lo: [-40, 0] },
+      { from: "APS", to: "SO3", name: ["APS ⇄ sulfite", "APS ⇄ сулфит"], genes: "aprAB", score: core(S("dissimilatory sulfite < > APS"), ["K00394"], "aprA"), side: "out", bend: 26, both: true, lo: [-40, 0] },
       { from: "SO4", to: "APS", name: ["sulfate activation", "активиране на сулфат"], genes: "sat / cysDN", score: ATPS, side: "in", bend: 22, lo: [34, 10] },
       { from: "APS", to: "SO3", name: ["APS / PAPS reduction", "редукция на APS / PAPS"], genes: "cysH (cysC)", score: APSR, side: "in", bend: 22, lo: [70, 16] },
-      { from: "SO3", to: "H2S", name: ["sulfite ⇄ sulfide", "сулфит ⇄ сулфид"], genes: "dsrAB", score: S("dissimilatory sulfite < > sulfide"), side: "out", bend: 30, both: true, lo: [-14, 8] },
+      { from: "SO3", to: "H2S", name: ["sulfite ⇄ sulfide", "сулфит ⇄ сулфид"], genes: "dsrAB", score: core(S("dissimilatory sulfite < > sulfide"), ["K11180"], "dsrA"), side: "out", bend: 30, both: true, lo: [-14, 8] },
       { from: "SO3", to: "H2S", name: ["assimilatory reduction", "асимилационна редукция"], genes: "cysJI / sir", score: S("sulfur assimilation"), side: "in", bend: 26, lo: [30, 2] },
       { from: "H2S", to: "S0", name: ["sulfide oxidation", "окисление на сулфид"], genes: "sqr / fccB", score: S("sulfide oxidation"), side: "out", bend: 30, lo: [14, 8] },
       { from: "S0", to: "H2S", name: ["S⁰ reduction", "редукция на S⁰"], genes: "sreABC / hydABGD", score: best(["sulfur reductase sreABC", "sulfhydrogenase"]), side: "in", bend: 24, lo: [-22, -42] },
       { from: "S0", to: "SO3", name: ["S⁰ dioxygenase", "S⁰ диоксигеназа"], genes: "sdo", score: S("sulfur dioxygenase"), side: "in", bend: 70, lo: [0, -6] },
-      { from: "SO3", to: "SO4", name: ["sulfite oxidation", "окисление на сулфит"], genes: "sorA / soeABC", score: best(["sulfite dehydrogenase", "sulfite dehydrogenase (quinone)"]), side: "in", bend: 36, lo: [14, 0] },
-      { from: "S2O3", to: "SO4", name: ["thiosulfate oxidation", "окисление на тиосулфат"], genes: "soxABXYZ", score: S("thiosulfate oxidation"), side: "out", bend: 30, lo: [-6, 22] },
+      { from: "SO3", to: "SO4", name: ["sulfite oxidation", "окисление на сулфит"], genes: "sorA / soeABC", score: core(best(["sulfite dehydrogenase", "sulfite dehydrogenase (quinone)"]), ["K05301", "K21307"], "sorA / soeA"), side: "in", bend: 36, lo: [14, 0] },
+      { from: "S2O3", to: "SO4", name: ["thiosulfate oxidation", "окисление на тиосулфат"], genes: "soxABXYZ", score: core(S("thiosulfate oxidation"), ["K17224"], "soxB"), side: "out", bend: 30, lo: [-6, 22] },
       { from: "S2O3", to: "S4O6", name: ["to tetrathionate", "до тетратионат"], genes: "tsdA / doxDA", score: best(["alt thiosulfate oxidation tsdA", "alt thiosulfate oxidation doxAD"]), bend: 0, lo: [-50, -50] },
-      { from: "S2O3", to: "H2S", name: ["thiosulfate reduction", "редукция на тиосулфат"], genes: "phsABC", score: S("thiosulfate/polysulfide reductase"), side: "in", bend: 30, lo: [26, -30] }
+      { from: "S2O3", to: "H2S", name: ["thiosulfate reduction", "редукция на тиосулфат"], genes: "phsABC", score: core(S("thiosulfate/polysulfide reductase"), ["K08352"], "phsA"), side: "in", bend: 30, lo: [26, -30] }
     ]);
     var methano = Object.keys(EVc).filter(function (k) { return /^Methanogenesis via|Coenzyme M reduction/.test(k); });
     var hydrog = ["NiFe hydrogenase", "ferredoxin hydrogenase", "membrane-bound hydrogenase", "hydrogen:quinone oxidoreductase",
@@ -857,22 +920,29 @@ __PLOTLY__
       { from: "CO2", to: "BIO", name: ["Wood–Ljungdahl", "Wood–Ljungdahl"], genes: "", score: S("Wood-Ljungdahl"), bend: 0, oneLine: true },
       { from: "CO2", to: "BIO", name: ["3-HP bicycle", "3-HP двоен цикъл"], genes: "", score: S("3-Hydroxypropionate Bicycle"), bend: -64, oneLine: true },
       { from: "CO2", to: "BIO", name: ["3-HP / 4-HB", "3-HP / 4-HB"], genes: "", score: S("4-Hydroxybutyrate/3-hydroxypropionate"), bend: -128, oneLine: true },
-      { from: "CO2", to: "CH4", name: ["methanogenesis", "метаногенеза"], genes: "", score: best(methano), bend: 0, lo: [0, 4] },
-      { from: "CH4", to: "CH3OH", name: ["CH₄ oxidation", "окисление на CH₄"], genes: "sMMO / pMMO", score: best(["Soluble methane monooxygenase", "ammonia oxidation (amo/pmmo)"]), bend: 0, lo: [-12, 34] },
+      { from: "CO2", to: "CH4", name: ["methanogenesis", "метаногенеза"], genes: "mcrABG", score: (sc("Coenzyme M reduction to methane") || 0) >= 0.5 ? best(methano) : { s: 0, g: 0, ids: [] }, bend: 0, lo: [0, 4] },
+      { from: "CH4", to: "CH3OH", name: ["CH₄ oxidation", "окисление на CH₄"], genes: "sMMO / pMMO", score: core(best(["Soluble methane monooxygenase", "ammonia oxidation (amo/pmmo)"]), ["K16157", "K10944"], "mmoX / pmoA"), bend: 0, lo: [-12, 34] },
       { from: "CH3OH", to: "HCHO", name: ["CH₃OH oxidation", "окисление на CH₃OH"], genes: "mxaFI", score: best(["methanol dehydrogenase", "alcohol oxidase"]), bend: 0, lo: [4, 34] },
-      { from: "HCHO", to: "BIO", name: ["serine pathway", "серинов път"], genes: "", score: S("Serine pathway/formaldehyde assimilation"), bend: 0 },
+      { from: "HCHO", to: "BIO", name: ["serine pathway", "серинов път"], genes: "", score: core(S("Serine pathway/formaldehyde assimilation"), ["K08691"], "mcl"), bend: 34, lo: [-85, -18] },
+      { from: "HCHO", to: "BIO", name: ["RuMP pathway", "RuMP път"], genes: "hxlAB", score: RUMP, bend: -34, lo: [81, -18] },
       { from: "H2", to: "HP", name: ["H₂ oxidation", "окисление на H₂"], genes: BG ? "7 типа хидрогенази" : "7 hydrogenase types", score: best(hydrog), bend: 0, lo: [0, -26] }
     ]);
     var lg = $("cy-legend");
     [["#3f9a50", T.cy_l_full], ["var(--s4)", T.cy_l_mid], ["var(--s3)", T.cy_l_low]].forEach(function (x) {
       lg.insertAdjacentHTML("beforeend", '<span><i class="cy-sw" style="border-color: ' + x[0] + '"></i>' + esc(x[1]) + "</span>"); });
     lg.insertAdjacentHTML("beforeend", '<span><i class="cy-sw" style="border-top: 2px dashed #c3ccc9"></i>' + esc(T.cy_absent) + "</span>");
-    // steps of one diagram whose genes are the same proteins (one set contained in the other)
-    var shared = [];
-    Object.keys(EDGES).forEach(function (id) { var es = EDGES[id].filter(function (e) { return e.s > 0 && e.ids.length; });
-      es.forEach(function (a, i) { es.slice(i + 1).forEach(function (b) {
-        var sm = a.ids.length <= b.ids.length ? a : b, lg2 = sm === a ? b : a;
-        if (sm.ids.every(function (x) { return lg2.ids.indexOf(x) >= 0; })) { shared.push(a.name + " / " + b.name + " (" + sm.ids.join(", ") + ")"); } }); }); });
+    // steps resting on the same proteins (one gene set inside the other), within and across the three diagrams;
+    // sat for both sulfate arrows and the bifunctional CysNC are shared by design and not reported
+    var BYDESIGN = { "sulfate ⇄ APS|sulfate activation": 1, "sulfate activation|APS / PAPS reduction": 1 };
+    var shared = [], all = [], styled = false;
+    Object.keys(EDGES).forEach(function (id) { EDGES[id].forEach(function (e, i) { if (e.s > 0 && e.ids.length) { all.push({ e: e, p: PATHS[id][i] }); } }); });
+    all.forEach(function (A, i) { all.slice(i + 1).forEach(function (B) {
+      var a = A.e, b = B.e, sm = a.ids.length <= b.ids.length ? a : b, lg2 = sm === a ? b : a;
+      if (BYDESIGN[a.key + "|" + b.key] || BYDESIGN[b.key + "|" + a.key]) { return; }
+      if (!sm.ids.every(function (x) { return lg2.ids.indexOf(x) >= 0; })) { return; }
+      shared.push(a.name + " / " + b.name + " (" + sm.ids.join(", ") + ")");
+      if (a.s >= 0.5 && b.s >= 0.5 && !a.nocore && !b.nocore) { A.p.classList.add("cy-e-shared"); B.p.classList.add("cy-e-shared"); styled = true; } }); });
+    if (styled) { lg.insertAdjacentHTML("beforeend", '<span><i class="cy-sw" style="border-top: 4px dashed var(--s4)"></i>' + esc(T.cy_l_shared) + "</span>"); }
     var sh = $("cy-shared");
     if (sh) { sh.innerHTML = shared.length ? "<b>" + esc(T.cy_shared) + "</b> " + shared.map(esc).join("; ") + "." : ""; sh.hidden = !shared.length; }
     window.__cycleEdges = EDGES; window.__cycleShared = shared;

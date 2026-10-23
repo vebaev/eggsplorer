@@ -100,6 +100,8 @@ def score_kos(kos, corrected: bool = False) -> dict[str, float | None]:
     achievable maximum so that a complete function reads 1.0, not 0.99.
     """
     kos = set(kos)
+    if corrected:
+        kos |= {part for fused, parts in FUSED_KOS.items() if fused in kos for part in parts}
     result: dict[str, float] = {}
     for func in _SCORER_FUNCS:
         result.update(func(kos))
@@ -202,6 +204,9 @@ KNOWN_ISSUES = {
     "exo-poly-alpha-galacturonosidase": "no KO is defined for this function in the original definitions, so it is not scored",
     "nitrite oxidation": "uses the same KOs as nitrate reductase NarGH (K00370, K00371), so genomes with "
                          "a nitrate reductase also score here",
+    "NADH-quinone oxidoreductase": "nuoC and nuoD are one fused gene in many Proteobacteria (nuoCD, K13378; nuoBCD, "
+                                   "K13380), which the original definition does not count; the corrected score counts "
+                                   "the fused gene for each of its subunits",
     "Sec-SRP": "the original definition counts the Sec and SRP genes only when secD/secF (K03072, K03074 or K12257) "
                "are present, so genomes without SecDF, for example streptococci, score 0 despite SecYEG, SecA, Ffh "
                "and FtsY; the corrected score counts these genes without that condition",
@@ -210,6 +215,9 @@ KNOWN_ISSUES = {
 _SEC_GATE = ("K03072", "K03074", "K12257")
 _SEC_REST = ("K03073", "K03075", "K03076", "K03210", "K03217", "K03070", "K13301", "K03110", "K03071", "K03106")
 NOT_EVALUATED = ("pectinesterase", "exo-poly-alpha-galacturonosidase")
+# fused genes that carry several subunits of one complex (corrected mode counts them for each subunit)
+FUSED_KOS = {"K13378": ("K00332", "K00333"),            # nuoCD
+             "K13380": ("K00331", "K00332", "K00333")}  # nuoBCD
 
 
 def same_kos_groups(fmap: dict[str, list[str]] | None = None) -> dict[str, list[str]]:
@@ -364,7 +372,11 @@ def function_evidence(ko_genes: dict[str, set[str]], labels: dict[str, str] | No
         found = [{"ko": ko, "genes": sorted(ko_genes[ko]), "copies": len(ko_genes[ko]),
                   "source": labels.get(ko, "")}
                  for ko in fmap[f] if ko in ko_genes]
-        missing = [ko for ko in fmap[f] if ko not in ko_genes]
+        for fused, parts in FUSED_KOS.items():  # subunits carried by a fused gene (corrected score only)
+            if fused in ko_genes:
+                found += [{"ko": ko, "genes": sorted(ko_genes[fused]), "copies": len(ko_genes[fused]),
+                           "source": f"fused gene {fused}"} for ko in parts if ko in fmap[f] and ko not in ko_genes]
+        missing = [ko for ko in fmap[f] if ko not in {x["ko"] for x in found}]
         scorer = _FUNC_TO_SCORER[f]
         # missing KOs that would raise the score of this genome if found (the real gaps)
         gaps = [ko for ko in missing if scorer(present | {ko})[f] > original[f]]

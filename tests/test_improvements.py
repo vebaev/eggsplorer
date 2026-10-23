@@ -110,6 +110,13 @@ def test_corrected_mode():
     # with secD present the original rule applies unchanged
     assert dc.score_kos(sec | {"K03072"}, corrected=True)["Sec-SRP"] == round(min(1.0, dc.score_kos(sec | {"K03072"})["Sec-SRP"] / ceiling), 2)
 
+    # fused nuoCD (K13378) carries subunits C and D: the original misses them, corrected mode counts them
+    nuo = {f"K{n:05d}" for n in range(330, 344)} - {"K00332", "K00333"}
+    assert dc.score_kos(nuo | {"K13378"})["NADH-quinone oxidoreductase"] < 1
+    assert dc.score_kos(nuo | {"K13378"}, corrected=True)["NADH-quinone oxidoreductase"] == 1.0
+    ev = dc.function_evidence({**{k: {"g" + k} for k in nuo}, "K13378": {"gCD"}})["NADH-quinone oxidoreductase"]
+    assert not ev["missing"] and {x["ko"] for x in ev["found"] if x["genes"] == ["gCD"]} == {"K00332", "K00333"}
+
 
 def test_cli(tmp):
     egg = write(tmp / "c.emapper.annotations", "## x\n" + HEADER + "\n"

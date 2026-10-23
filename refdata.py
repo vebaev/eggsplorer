@@ -361,4 +361,18 @@ CYCLE_EXTRA_KOS = {
     "K00955": "cysNC",                                  # bifunctional ATP sulfurylase / APS kinase
     "K00860": "cysC",                                   # APS kinase (APS -> PAPS)
     "K00390": "cysH",                                   # PAPS / APS reductase (-> sulfite)
+    # nitrogen: respiratory DNRA versus assimilation
+    "K03385": "nrfA", "K15876": "nrfH",                 # cytochrome c nitrite reductase (respiratory DNRA)
+    "K00362": "nirB", "K00363": "nirD", "K00366": "nirA",  # NAD(P)H / ferredoxin nitrite reductases (assimilation)
+    "K00372": "nasA", "K00367": "narB", "K10534": "NR",  # assimilatory nitrate reductases
+    # C1: formaldehyde assimilation
+    "K08691": "mcl",                                    # malyl-CoA lyase, marker of the serine cycle
+    "K08093": "hxlA", "K08094": "hxlB",                 # RuMP pathway: 3-hexulose-6-phosphate synthase / isomerase
+    "K13812": "fae-hps", "K13831": "hps-phi",           # fused RuMP enzymes
+    # catalytic subunits that a step needs before its accessory subunits count
+    "K00370": "narG", "K02567": "napA", "K04561": "norB",
+    "K02586": "nifD",                                   # nitrogenase alpha (eggNOG gives Vnf/Anf the same KO)
+    "K10944": "amoA/pmoA", "K16157": "mmoX",
+    "K08352": "phsA", "K21307": "soeA", "K05301": "sorA", "K17224": "soxB",
+    "K00394": "aprA", "K11180": "dsrA",
 }

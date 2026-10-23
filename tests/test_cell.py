@@ -37,7 +37,8 @@ def check_rules():
     unknown = sorted(n for n in names if n not in fmap)
     assert not unknown, f"functions not in the KEGG-Decoder map: {unknown}"
     kos = set(re.findall(r'"(K\d{5})"', CELL_JS))
-    assert kos <= set(rd.CELL_EXTRA_KOS), sorted(kos - set(rd.CELL_EXTRA_KOS))
+    known = set(rd.CELL_EXTRA_KOS) | set(rd.CYCLE_EXTRA_KOS)  # the cell also reads a few cycle KOs (C1 tile)
+    assert kos <= known, sorted(kos - known)
     cnames = set(re.findall(r'S\("([^"]+)"\)', CYCLE_JS))
     for grp in re.findall(r"(?:best|allOf)\(\[([^\]]+)\]\)", CYCLE_JS):
         cnames.update(re.findall(r'"([^"]+)"', grp))
@@ -80,8 +81,9 @@ SULFUR_CASES = [
       ("t", ["K19713"]), ("x", ["K08352", "K21307"])],
      {"sulfate activation": 1, "APS / PAPS reduction": 1, "assimilatory reduction": 1, "to tetrathionate": 1,
       "thiosulfate oxidation": 0, "sulfate ⇄ APS": 0}, True),
-    # sat only, no cysH: activation (and the dissimilatory sat arrow) light, reduction of APS does not
-    ([("s", ["K00958"])], {"sulfate activation": 1, "APS / PAPS reduction": 0, "sulfate ⇄ APS": 1}, True),
+    # sat only, no cysH: activation (and the dissimilatory sat arrow) light, reduction of APS does not;
+    # sat serving both sulfate arrows is shared by design and not reported
+    ([("s", ["K00958"])], {"sulfate activation": 1, "APS / PAPS reduction": 0, "sulfate ⇄ APS": 1}, False),
     # cysD without cysN: half an ATP sulfurylase; Sox complete goes to sulfate, not to tetrathionate
     ([("d", ["K00957"])] + [(f"sox{i}", [k]) for i, k in enumerate(["K17222", "K17223", "K17224", "K17225", "K17226", "K17227"])],
      {"sulfate activation": 0.5, "thiosulfate oxidation": 1, "to tetrathionate": 0}, False),
