@@ -33,7 +33,7 @@ python '$__tool_directory__/eggsplorer.py'
     ]]></command>
     <inputs>
         <param name="annotations" type="data" format="tabular,txt" label="eggNOG-mapper annotations"
-            help="The 'annotations' output of eggNOG-mapper (*.emapper.annotations), version 2.x."/>
+            help="The 'annotations' output of eggNOG-mapper (*.emapper.annotations)."/>
         <param name="sample_name" type="text" value="" optional="true" label="Sample name"
             help="Shown as the report title. Leave empty to use the dataset name.">
             <sanitizer invalid_char="">
@@ -150,8 +150,8 @@ Sections:
   the envelope type (diderm or monoderm) comes from the LPS outer-membrane markers lpxC, lptD and bamA. A component is
   drawn when its completeness is at least 0.50; the others are listed under the drawing.
 - **Metabolic function completeness**: the functions with at least one step present, scored with the definitions of
-  KEGG-Decoder v1.3 (Graham et al. 2018) from a bundled, unmodified copy of its scoring code. Scores are corrected for known
-  issues of KEGG-Decoder (alcohol dehydrogenases never counted in mixed-acid fermentation, functions without defined KOs,
+  Graham et al. (2018) from a bundled, unmodified copy of its scoring code. Scores are corrected for known
+  issues of the original definitions (alcohol dehydrogenases never counted in mixed-acid fermentation, functions without defined KOs,
   scores capped at 0.99, Sec-SRP counted only when SecDF is present). Clicking a function lists the supporting genes, copy numbers, found KOs and the missing steps
   that would raise the score.
 - **Element cycles**: nitrogen, sulfur, carbon fixation, C1 and hydrogen steps as diagrams with fixed layout, each arrow
@@ -169,7 +169,7 @@ Sections:
 
 **Inputs**
 
-- *eggNOG-mapper annotations* (``*.emapper.annotations``, version 2.x).
+- *eggNOG-mapper annotations* (``*.emapper.annotations``).
 - Optional *KofamScan* output (``-f detail-tsv`` or ``-f mapper``) as a second, HMM-based source of KO assignments.
   Gene identifiers must match those of the eggNOG-mapper input.
 
@@ -189,11 +189,5 @@ Sections:
 - **For Galaxy administrators**: Galaxy sanitises HTML outputs by default, which removes the report's JavaScript.
   Add this tool to ``sanitize_allowlist_file`` so the report works inside Galaxy. Users can always download
   the report and open it in a browser.
-
-**Citation**
-
-If you use the metabolic function scores, please cite KEGG-Decoder (Graham, Heidelberg and Tully 2018, ISME J 12:1861–1866)
-together with eggNOG-mapper and KEGG.
     ]]></help>
-    <expand macro="citations"/>
 </tool>

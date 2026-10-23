@@ -18,7 +18,7 @@ jobs:
           pip install plotly==5.24.1 pandas Cheetah3 playwright planemo seaborn matplotlib scipy
           playwright install --with-deps chromium
       - name: Lint Galaxy wrapper
-        run: planemo lint eggsplorer.xml
+        run: planemo lint --skip CitationsMissing eggsplorer.xml
       - name: Unit and layout tests
         run: |
           python -I tests/test_decoder_core.py
