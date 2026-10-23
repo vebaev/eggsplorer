@@ -251,10 +251,10 @@ __PLOTLY__
     <div class="cy-legend" id="cy-legend"></div>
     <div class="grid-2">
       <div class="panel"><h3 data-t="cy_n"></h3><svg id="cy-n" viewBox="-50 0 620 470" role="img"></svg></div>
-      <div class="panel"><h3 data-t="cy_s"></h3><svg id="cy-s" viewBox="-50 0 620 470" role="img"></svg></div>
+      <div class="panel"><h3 data-t="cy_s"></h3><svg id="cy-s" viewBox="-50 0 670 470" role="img"></svg></div>
       <div class="panel"><h3 data-t="cy_c"></h3><svg id="cy-c" viewBox="-50 0 620 470" role="img"></svg></div>
       <div class="panel" style="align-content: start"><h3 data-t="cy_read_t"></h3><p class="note" data-t="cy_read"></p>
-        <div class="cy-caveat" data-t="cy_caveat"></div></div>
+        <div class="cy-caveat" data-t="cy_caveat"></div><p class="note" id="cy-shared" hidden></p></div>
     </div>
   </section>
 
@@ -748,11 +748,23 @@ __PLOTLY__
     }
     function sc(n) { return EVc[n] ? EVc[n].score_corrected : null; }
     function gn(n) { return EVc[n] && typeof EVc[n].genes === "number" ? EVc[n].genes : 0; }
-    function S(n) { return { s: sc(n), g: gn(n) }; }
-    function best(names) { var s = null, g = 0;
-      names.forEach(function (n) { var v = sc(n); if (v !== null && (s === null || v > s)) { s = v; } g = Math.max(g, gn(n)); }); return { s: s, g: g }; }
-    function allOf(names) { var s = null, g = 0;
-      names.forEach(function (n) { var v = sc(n); if (v !== null) { s = s === null ? v : Math.min(s, v); } g += gn(n); }); return { s: s, g: g }; }
+    function ids(n, set) { ((EVc[n] || {}).found || []).forEach(function (f) { (f.genes || []).forEach(function (x) { set[x] = 1; }); }); return set; }
+    function S(n) { return { s: sc(n), g: gn(n), ids: Object.keys(ids(n, {})) }; }
+    function best(names) { var s = null, g = 0, set = {};
+      names.forEach(function (n) { var v = sc(n); if (v !== null && (s === null || v > s)) { s = v; } g = Math.max(g, gn(n)); if (v > 0) { ids(n, set); } });
+      return { s: s, g: g, ids: Object.keys(set) }; }
+    function allOf(names) { var s = null, g = 0, set = {};
+      names.forEach(function (n) { var v = sc(n); if (v !== null) { s = s === null ? v : Math.min(s, v); } g += gn(n); ids(n, set); });
+      return { s: s, g: g, ids: Object.keys(set) }; }
+    // steps read from KOs directly (refdata.CYCLE_EXTRA_KOS): assimilatory sulfate reduction, KEGG module M00176
+    var CK = (D.cycles || {}).kos || {};
+    function has(k) { return (CK[k] || []).length > 0; }
+    function kos(list, s) { var set = {}; list.forEach(function (k) { (CK[k] || []).forEach(function (x) { set[x] = 1; }); });
+      var g = Object.keys(set); return { s: s, g: g.length, ids: g }; }
+    var cysN = has("K00956") || has("K00955"), cysC = has("K00860") || has("K00955");
+    var ATPS = kos(["K00958", "K00957", "K00956", "K00955"], has("K00958") || (has("K00957") && cysN) ? 1 : has("K00957") || cysN ? 0.5 : 0);
+    var APSR = kos(cysC ? ["K00390", "K00860", "K00955"] : ["K00390"], has("K00390") ? 1 : 0);
+    var EDGES = {};
     function cls(s) { return s === null ? "na" : s <= 0 ? "abs" : s < 0.5 ? "low" : s < 1 ? "mid" : "full"; }
     function fmtS(v) { return v === null ? T.cy_na : v <= 0 ? T.cy_absent : v.toFixed(2); }
     function towards(p, q, d) { var dx = q.x - p.x, dy = q.y - p.y, l = Math.hypot(dx, dy) || 1; return { x: p.x + dx / l * d, y: p.y + dy / l * d }; }
@@ -788,6 +800,7 @@ __PLOTLY__
         var name = BG ? e.name[1] : e.name[0];
         label(lL, P.x, P.y, name, (e.genes ? e.genes + " · " : "") + t2, !(st.s > 0), e.oneLine);
         E("title", {}, p, name + (e.genes ? " (" + e.genes + ")" : "") + ": " + t2);
+        (EDGES[id] = EDGES[id] || []).push({ name: name, s: st.s, g: st.g, ids: st.ids || [] });
       });
       keys.forEach(function (k) {
         var n = nodes[k], g = E("g", { "class": "cy-node" }, lN);
@@ -814,17 +827,21 @@ __PLOTLY__
     ]);
     cycle("cy-s", {
       SO4: { x: 260, y: 48, r: 30, t: "SO₄²⁻" }, APS: { x: 86, y: 140, r: 26, t: "APS" }, SO3: { x: 86, y: 322, r: 30, t: "SO₃²⁻" },
-      H2S: { x: 260, y: 404, r: 26, t: "H₂S" }, S0: { x: 438, y: 322, r: 22, t: "S⁰" }, S2O3: { x: 438, y: 140, r: 33, t: "S₂O₃²⁻" }
+      H2S: { x: 260, y: 404, r: 26, t: "H₂S" }, S0: { x: 438, y: 322, r: 22, t: "S⁰" }, S2O3: { x: 438, y: 140, r: 33, t: "S₂O₃²⁻" },
+      S4O6: { x: 580, y: 42, r: 33, t: "S₄O₆²⁻" }
     }, [
       { from: "SO4", to: "APS", name: ["sulfate ⇄ APS", "сулфат ⇄ APS"], genes: "sat", score: S("dissimilatory sulfate < > APS"), side: "out", bend: 30, both: true, lo: [-8, -4] },
-      { from: "APS", to: "SO3", name: ["APS ⇄ sulfite", "APS ⇄ сулфит"], genes: "aprAB", score: S("dissimilatory sulfite < > APS"), side: "out", bend: 26, both: true, lo: [-10, 0] },
+      { from: "APS", to: "SO3", name: ["APS ⇄ sulfite", "APS ⇄ сулфит"], genes: "aprAB", score: S("dissimilatory sulfite < > APS"), side: "out", bend: 26, both: true, lo: [-40, 0] },
+      { from: "SO4", to: "APS", name: ["sulfate activation", "активиране на сулфат"], genes: "sat / cysDN", score: ATPS, side: "in", bend: 22, lo: [34, 10] },
+      { from: "APS", to: "SO3", name: ["APS / PAPS reduction", "редукция на APS / PAPS"], genes: "cysH (cysC)", score: APSR, side: "in", bend: 22, lo: [70, 16] },
       { from: "SO3", to: "H2S", name: ["sulfite ⇄ sulfide", "сулфит ⇄ сулфид"], genes: "dsrAB", score: S("dissimilatory sulfite < > sulfide"), side: "out", bend: 30, both: true, lo: [-14, 8] },
       { from: "SO3", to: "H2S", name: ["assimilatory reduction", "асимилационна редукция"], genes: "cysJI / sir", score: S("sulfur assimilation"), side: "in", bend: 26, lo: [30, 2] },
       { from: "H2S", to: "S0", name: ["sulfide oxidation", "окисление на сулфид"], genes: "sqr / fccB", score: S("sulfide oxidation"), side: "out", bend: 30, lo: [14, 8] },
       { from: "S0", to: "H2S", name: ["S⁰ reduction", "редукция на S⁰"], genes: "sreABC / hydABGD", score: best(["sulfur reductase sreABC", "sulfhydrogenase"]), side: "in", bend: 24, lo: [-22, -42] },
       { from: "S0", to: "SO3", name: ["S⁰ dioxygenase", "S⁰ диоксигеназа"], genes: "sdo", score: S("sulfur dioxygenase"), side: "in", bend: 70, lo: [0, -6] },
       { from: "SO3", to: "SO4", name: ["sulfite oxidation", "окисление на сулфит"], genes: "sorA / soeABC", score: best(["sulfite dehydrogenase", "sulfite dehydrogenase (quinone)"]), side: "in", bend: 36, lo: [14, 0] },
-      { from: "S2O3", to: "SO4", name: ["thiosulfate oxidation", "окисление на тиосулфат"], genes: "sox / tsdA / doxDA", score: best(["thiosulfate oxidation", "alt thiosulfate oxidation tsdA", "alt thiosulfate oxidation doxAD"]), side: "out", bend: 30, lo: [16, -6] },
+      { from: "S2O3", to: "SO4", name: ["thiosulfate oxidation", "окисление на тиосулфат"], genes: "soxABXYZ", score: S("thiosulfate oxidation"), side: "out", bend: 30, lo: [-6, 22] },
+      { from: "S2O3", to: "S4O6", name: ["to tetrathionate", "до тетратионат"], genes: "tsdA / doxDA", score: best(["alt thiosulfate oxidation tsdA", "alt thiosulfate oxidation doxAD"]), bend: 0, lo: [-50, -50] },
       { from: "S2O3", to: "H2S", name: ["thiosulfate reduction", "редукция на тиосулфат"], genes: "phsABC", score: S("thiosulfate/polysulfide reductase"), side: "in", bend: 30, lo: [26, -30] }
     ]);
     var methano = Object.keys(EVc).filter(function (k) { return /^Methanogenesis via|Coenzyme M reduction/.test(k); });
@@ -850,6 +867,15 @@ __PLOTLY__
     [["#3f9a50", T.cy_l_full], ["var(--s4)", T.cy_l_mid], ["var(--s3)", T.cy_l_low]].forEach(function (x) {
       lg.insertAdjacentHTML("beforeend", '<span><i class="cy-sw" style="border-color: ' + x[0] + '"></i>' + esc(x[1]) + "</span>"); });
     lg.insertAdjacentHTML("beforeend", '<span><i class="cy-sw" style="border-top: 2px dashed #c3ccc9"></i>' + esc(T.cy_absent) + "</span>");
+    // steps of one diagram whose genes are the same proteins (one set contained in the other)
+    var shared = [];
+    Object.keys(EDGES).forEach(function (id) { var es = EDGES[id].filter(function (e) { return e.s > 0 && e.ids.length; });
+      es.forEach(function (a, i) { es.slice(i + 1).forEach(function (b) {
+        var sm = a.ids.length <= b.ids.length ? a : b, lg2 = sm === a ? b : a;
+        if (sm.ids.every(function (x) { return lg2.ids.indexOf(x) >= 0; })) { shared.push(a.name + " / " + b.name + " (" + sm.ids.join(", ") + ")"); } }); }); });
+    var sh = $("cy-shared");
+    if (sh) { sh.innerHTML = shared.length ? "<b>" + esc(T.cy_shared) + "</b> " + shared.map(esc).join("; ") + "." : ""; sh.hidden = !shared.length; }
+    window.__cycleEdges = EDGES; window.__cycleShared = shared;
   })();
 
   /* CAZy by substrate: solid = main activity, hatched = possible */

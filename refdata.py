@@ -352,3 +352,13 @@ CELL_EXTRA_KOS = {
     "K03886": "qcrA", "K03887": "qcrB", "K03888": "qcrC",             # menaquinol-cytochrome c reductase, Bacillus type
     "K03889": "qcrC", "K03890": "qcrA", "K03891": "qcrB",             # menaquinol-cytochrome c reductase (bcc, Actinobacteria)
 }
+
+# KOs that the element-cycle diagrams read directly, beyond the KEGG-Decoder functions:
+# assimilatory sulfate reduction as in KEGG module M00176 (identifiers only, no KEGG content).
+CYCLE_EXTRA_KOS = {
+    "K00958": "sat",                                    # ATP sulfurylase, single-chain type
+    "K00957": "cysD", "K00956": "cysN",                 # ATP sulfurylase, two-subunit type (Proteobacteria)
+    "K00955": "cysNC",                                  # bifunctional ATP sulfurylase / APS kinase
+    "K00860": "cysC",                                   # APS kinase (APS -> PAPS)
+    "K00390": "cysH",                                   # PAPS / APS reductase (-> sulfite)
+}

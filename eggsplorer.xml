@@ -155,7 +155,9 @@ Sections:
   scores capped at 0.99, Sec-SRP counted only when SecDF is present). Clicking a function lists the supporting genes, copy numbers, found KOs and the missing steps
   that would raise the score.
 - **Element cycles**: nitrogen, sulfur, carbon fixation, C1 and hydrogen steps as diagrams with fixed layout, each arrow
-  coloured by the completeness of its genes.
+  coloured by the completeness of its genes. The sulfur diagram separates dissimilatory sulfate reduction (outer arrows)
+  from assimilation (inner arrows: sat or cysDN, cysH, cysJI or sir; KEGG module M00176) and sends TsdA/DoxDA to
+  tetrathionate and Sox to sulfate. Steps that rest on the same proteins in a genome are listed under the diagrams.
 - **Transporters**: Sankey diagram from TC class to subclass and family, and a table of families with names.
 - **Enzymes**: Sankey diagram from EC class to subclass and sub-subclass with ENZYME names (bundled, CC BY 4.0),
   the most frequent enzymes, and CAZy classes and families with their main activity and a link to the CAZy family page.

@@ -27,7 +27,7 @@ import decoder_core as dc  # noqa: E402
 import refdata as rd  # noqa: E402
 import go_core  # noqa: E402
 
-TOOL_VERSION = "1.0"
+TOOL_VERSION = "1.0.1"
 PLOTLY_CDN = "https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"
 COLUMNS = ["query", "seed_ortholog", "evalue", "score", "eggNOG_OGs", "max_annot_lvl",
            "COG_category", "Description", "Preferred_name", "GOs", "EC", "KEGG_ko",
@@ -361,6 +361,7 @@ def summarise(rows, lang, top_n, kofam=None, mode="union", max_evalue=None, min_
         "decoder": {"groups": groups, "evidence": evidence, "issues": dc.KNOWN_ISSUES,
                     "mode": mode, "kofam": bool(kofam)},
         "cell": {"kos": {k: len(used.get(k, ())) for k in rd.CELL_EXTRA_KOS}},
+        "cycles": {"kos": {k: sorted(used.get(k, ())) for k in rd.CYCLE_EXTRA_KOS}},
         "table": table,
     }
 
@@ -398,9 +399,10 @@ STRINGS = {
         "cy_n": "Nitrogen", "cy_s": "Sulfur", "cy_c": "Carbon fixation, C1 and hydrogen",
         "cy_read_t": "How to read it",
         "cy_read": "Colour and width give the completeness of the genes for a step; the label names the genes and the number of proteins found. Dashed grey arrows are steps with no genes found. Hover an arrow for details. The diagrams show genetic potential, not activity.",
-        "cy_caveat": "Nitrite oxidation (nxrAB) and nitrate reduction (narGH) share the same KOs, so both arrows light up together; the direction cannot be told from KOs alone. Sulfate ⇄ APS (sat) and nitrite reduction to ammonium (nirBD) are also steps of sulfate and nitrite assimilation, so they light up in many genomes that do not reduce sulfate or perform DNRA; sulfate reduction also needs aprAB and dsrAB. Partial scores for the 3-hydroxypropionate routes usually come from enzymes shared with central metabolism and do not by themselves indicate CO₂ fixation.",
+        "cy_caveat": "Nitrite oxidation (nxrAB) and nitrate reduction (narGH) share the same KOs, so both arrows light up together; the direction cannot be told from KOs alone. Nitrite reduction to ammonium (nirBD) is also a step of nitrite assimilation, so DNRA lights up in many genomes that do not perform it. In the sulfur diagram the outer arrows are dissimilatory sulfate reduction and the inner ones assimilation (KEGG module M00176); ATP sulfurylase (sat) serves both, so the outer sulfate ⇄ APS arrow also lights in genomes that only assimilate sulfate, and sulfate reduction also needs aprAB and dsrAB. TsdA and DoxDA oxidise thiosulfate to tetrathionate, the Sox system to sulfate. Partial scores for the 3-hydroxypropionate routes usually come from enzymes shared with central metabolism and do not by themselves indicate CO₂ fixation.",
         "cy_l_full": "complete (1.00)", "cy_l_mid": "0.50–0.99", "cy_l_low": "below 0.50", "cy_absent": "absent", "cy_na": "not scored",
         "cy_gene": "gene", "cy_genes": "genes",
+        "cy_shared": "In this genome these steps rest on the same proteins, so the KOs alone cannot tell which of them the proteins perform:",
         "nav_func": "Metabolic functions", "nav_tr": "Transporters",
         "nav_enz": "Enzymes and CAZy", "nav_dom": "Domains", "nav_table": "Genes",
         "kpi_proteins": "Proteins", "kpi_annotated": "Functionally annotated",
@@ -478,9 +480,10 @@ STRINGS = {
         "cy_n": "Азот", "cy_s": "Сяра", "cy_c": "Фиксация на въглерод, C1 и водород",
         "cy_read_t": "Как се чете",
         "cy_read": "Цветът и дебелината показват пълнотата на гените за стъпката; надписът дава гените и броя намерени протеини. Сивите пунктирни стрелки са стъпки без намерени гени. Посочете стрелка за подробности. Схемите показват генетичен потенциал, а не активност.",
-        "cy_caveat": "Окислението на нитрит (nxrAB) и редукцията на нитрат (narGH) имат едни и същи KO, затова двете стрелки светват заедно; посоката не може да се определи само по KO. Сулфат ⇄ APS (sat) и редукцията на нитрит до амоний (nirBD) са и стъпки от асимилацията на сулфат и нитрит, затова светват в много геноми, които не редуцират сулфат и нямат DNRA; за редукция на сулфат са нужни и aprAB и dsrAB. Частичните оценки за 3-хидроксипропионатните пътища обикновено идват от ензими, общи с централния метаболизъм, и сами по себе си не означават фиксация на CO₂.",
+        "cy_caveat": "Окислението на нитрит (nxrAB) и редукцията на нитрат (narGH) имат едни и същи KO, затова двете стрелки светват заедно; посоката не може да се определи само по KO. Редукцията на нитрит до амоний (nirBD) е и стъпка от асимилацията на нитрит, затова DNRA светва в много геноми, които я нямат. В схемата на сярата външните стрелки са дисимилационната редукция на сулфат, а вътрешните – асимилацията (KEGG модул M00176); ATP сулфурилазата (sat) участва и в двете, затова външната стрелка сулфат ⇄ APS светва и в геноми, които само асимилират сулфат, а за редукция на сулфат са нужни и aprAB и dsrAB. TsdA и DoxDA окисляват тиосулфат до тетратионат, а системата Sox – до сулфат. Частичните оценки за 3-хидроксипропионатните пътища обикновено идват от ензими, общи с централния метаболизъм, и сами по себе си не означават фиксация на CO₂.",
         "cy_l_full": "пълна (1.00)", "cy_l_mid": "0.50–0.99", "cy_l_low": "под 0.50", "cy_absent": "липсва", "cy_na": "без оценка",
         "cy_gene": "ген", "cy_genes": "гена",
+        "cy_shared": "В този геном тези стъпки се базират на едни и същи протеини, затова само по KO не може да се каже коя от тях извършват:",
         "nav_func": "Метаболитни функции", "nav_tr": "Транспортери",
         "nav_enz": "Ензими и CAZy", "nav_dom": "Домейни", "nav_table": "Гени",
         "kpi_proteins": "Протеини", "kpi_annotated": "С функционална анотация",

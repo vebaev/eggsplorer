@@ -9,7 +9,7 @@ the report makes no network requests, and no database is queried.
 Overview and annotation coverage · taxonomic level of annotation transfer · COG categories (radar) ·
 most frequent GO terms · **cell overview** (respiratory chain, uptake, secretion, transporter families,
 motility and metabolic function groups on one fixed template) · metabolic function completeness
-(KEGG-Decoder definitions, corrected, with per-function evidence) · nitrogen, sulfur and carbon cycle
+(KEGG-Decoder definitions, corrected, with per-function evidence) · nitrogen, sulfur (dissimilatory and assimilatory) and carbon cycle
 diagrams · TC transporters (Sankey) · EC classes with ENZYME names (Sankey) · CAZy families and
 CAZy by substrate · Pfam domains · searchable gene table. English or Bulgarian.
 
@@ -73,3 +73,10 @@ Gene Ontology and ENZYME data: CC BY 4.0; IBM Plex fonts: SIL OFL 1.1 (see the `
 Cite eggNOG-mapper (Cantalapiedra et al. 2021), KEGG-Decoder (Graham et al. 2018)
 and KEGG (Kanehisa & Goto 2000) when using the report; the CAZy-by-substrate chart uses dbCAN-sub (Zheng et al. 2023). KEGG names are not
 bundled; KO identifiers link to the KEGG website.
+
+## Changes
+
+- **1.0.1**: sulfur diagram shows sulfate assimilation (sat or cysDN, cysH, cysJI or sir; KEGG module M00176) as
+  inner arrows beside the dissimilatory pathway; TsdA and DoxDA lead to tetrathionate, Sox to sulfate; steps that rest
+  on the same proteins in a genome are listed under the diagrams. Metabolic function scores are unchanged.
+- **1.0**: first release.
