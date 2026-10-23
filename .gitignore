@@ -6,3 +6,4 @@ tool_test_output.*
 *.emapper.annotations
 !test-data/*.emapper.annotations
 *_report.html
+*.zip
