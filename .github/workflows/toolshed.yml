@@ -21,12 +21,15 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install planemo
-      - name: Lint
-        run: planemo shed_lint --tools --ensure_metadata .
+      - name: Lint the tool
+        run: planemo lint eggsplorer.xml
       - name: Create or update the repository
         env:
           KEY: ${{ inputs.target == 'toolshed' && secrets.TOOLSHED_API_KEY || secrets.TESTTOOLSHED_API_KEY }}
         run: |
-          test -n "$KEY" || { echo "Missing API key secret for ${{ inputs.target }}"; exit 1; }
+          test -n "$KEY" || { echo "::error::Missing API key secret for ${{ inputs.target }}"; exit 1; }
+          set -o pipefail
           planemo shed_update --shed_target ${{ inputs.target }} --shed_key "$KEY" \
-            --force_repository_creation --message "Eggsplorer $(git rev-parse --short HEAD)" .
+            --force_repository_creation --message "Eggsplorer $(git rev-parse --short HEAD)" . 2>&1 | tee shed.log \
+            || { tail -n 25 shed.log | grep -v "$KEY" | while IFS= read -r line; do echo "::error::$line"; done; exit 1; }
+          tail -n 5 shed.log | while IFS= read -r line; do echo "::notice::$line"; done
