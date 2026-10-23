@@ -9,8 +9,8 @@ on:
       target:
         description: "Tool Shed"
         type: choice
-        options: [testtoolshed, toolshed]
-        default: testtoolshed
+        options: [toolshed, testtoolshed]
+        default: toolshed
 
 jobs:
   publish:
