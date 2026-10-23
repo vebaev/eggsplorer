@@ -27,7 +27,7 @@ import decoder_core as dc  # noqa: E402
 import refdata as rd  # noqa: E402
 import go_core  # noqa: E402
 
-TOOL_VERSION = "0.1.0"
+TOOL_VERSION = "1.0"
 PLOTLY_CDN = "https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"
 COLUMNS = ["query", "seed_ortholog", "evalue", "score", "eggNOG_OGs", "max_annot_lvl",
            "COG_category", "Description", "Preferred_name", "GOs", "EC", "KEGG_ko",
@@ -447,6 +447,7 @@ STRINGS = {
         "table_cog": "COG", "table_all": "All", "table_rows": "rows", "table_prev": "Previous", "table_next": "Next",
         "cols": ["ID", "Gene", "Description", "COG", "KO", "EC", "CAZy", "TC", "Pfam", "Level"],
         "footer": "Generated with Eggsplorer", "params": "Parameters",
+        "sample": "Sample", "src_version": "Eggsplorer version",
         "src_file": "File", "src_emapper": "eggNOG-mapper", "src_date": "Annotation date", "other": "Other",
     },
     "bg": {
@@ -526,6 +527,7 @@ STRINGS = {
         "table_cog": "COG", "table_all": "Всички", "table_rows": "реда", "table_prev": "Назад", "table_next": "Напред",
         "cols": ["ID", "Ген", "Описание", "COG", "KO", "EC", "CAZy", "TC", "Pfam", "Ниво"],
         "footer": "Генерирано с Eggsplorer", "params": "Параметри",
+        "sample": "Проба", "src_version": "Версия на Eggsplorer",
         "src_file": "Файл", "src_emapper": "eggNOG-mapper", "src_date": "Дата на анотацията", "other": "Други",
     },
 }

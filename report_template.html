@@ -39,6 +39,9 @@ p { margin: 0; max-width: 72ch; }
 /* header */
 header.top { background: var(--surface); border-bottom: 1px solid var(--line); }
 header.top .wrap { padding-block: 28px 22px; display: grid; gap: 14px; }
+h1.brand { color: #7fc483; text-transform: uppercase; letter-spacing: 0.06em; }
+.sample { font-size: 1.15rem; color: var(--muted); overflow-wrap: anywhere; }
+.sample b { color: var(--ink); font-weight: 600; }
 .meta { display: flex; flex-wrap: wrap; gap: 6px 22px; color: var(--muted); font-size: 0.9rem; }
 .meta span { overflow-wrap: anywhere; min-width: 0; }
 .meta b { color: var(--ink); font-weight: 500; }
@@ -182,7 +185,8 @@ __PLOTLY__
 
 <header class="top"><div class="wrap">
   <div class="eyebrow" id="h-eyebrow"></div>
-  <h1 id="h-title"></h1>
+  <h1 id="h-title" class="brand">Eggsplorer</h1>
+  <div class="sample" id="h-sample"></div>
   <div class="meta" id="h-meta"></div>
 </div></header>
 <nav class="sections" aria-label="sections"><div class="wrap" id="nav"></div></nav>
@@ -315,9 +319,10 @@ __PLOTLY__
 
   /* header */
   var M = D.meta, C = D.counts;
-  $("h-eyebrow").textContent = "eggNOG-mapper · " + T.title;
-  $("h-title").textContent = M.sample;
+  $("h-eyebrow").textContent = T.title;
+  $("h-sample").innerHTML = esc(T.sample) + ": <b>" + esc(M.sample) + "</b>";
   $("h-meta").innerHTML = [
+    [T.src_version, '<span class="mono">' + esc(M.tool_version) + "</span>"],
     [T.src_file, '<span class="mono">' + esc(M.file) + "</span>"],
     [T.src_emapper, '<span class="mono">' + esc(M.emapper || "—") + "</span>"],
     [T.src_date, esc(M.date || "—")],
@@ -394,8 +399,9 @@ __PLOTLY__
     marker: { size: 11, color: cog.map(function (c) { return css(groupVar[c.group]); }).concat([css(groupVar[(cog[0] || {}).group] || "--p1")]),
       line: { color: css("--accent"), width: 1 } },
     customdata: custom.concat([custom[0] || ["", 0, 0, ""]]),
+    hoverlabel: { bgcolor: "#ffffff", bordercolor: css("--accent"), font: { color: css("--ink"), size: 13, family: css("--f-body") } },
     hovertemplate: "<b>%{customdata[0]}</b><br>%{customdata[3]}<br>%{customdata[1]} " + T.proteins + " · %{customdata[2]}%<extra></extra>" }],
-    { height: cogNarrow ? 420 : 600, margin: cogNarrow ? { l: 30, r: 30, t: 30, b: 30 } : { l: 150, r: 150, t: 40, b: 40 }, hoverlabel: { font: { size: 13 } }, hoverdistance: 40,
+    { height: cogNarrow ? 420 : 600, margin: cogNarrow ? { l: 30, r: 30, t: 30, b: 30 } : { l: 150, r: 150, t: 40, b: 40 }, hoverdistance: 40,
       polar: { bgcolor: "rgba(0,0,0,0)", radialaxis: { ticksuffix: "%", gridcolor: css("--line"), linecolor: css("--line"),
         tickfont: { color: css("--muted"), size: 10 }, angle: 90 },
         angularaxis: { gridcolor: css("--line"), linecolor: css("--line"), direction: "clockwise",
