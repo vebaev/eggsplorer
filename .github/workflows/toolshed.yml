@@ -1,0 +1,32 @@
+name: publish to Tool Shed
+
+# Manual: Actions -> "publish to Tool Shed" -> Run workflow -> choose the target.
+# Needs repository secrets TESTTOOLSHED_API_KEY and/or TOOLSHED_API_KEY
+# (Settings -> Secrets and variables -> Actions). The keys never appear in the code or logs.
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Tool Shed"
+        type: choice
+        options: [testtoolshed, toolshed]
+        default: testtoolshed
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install planemo
+      - name: Lint
+        run: planemo shed_lint --tools --ensure_metadata .
+      - name: Create or update the repository
+        env:
+          KEY: ${{ inputs.target == 'toolshed' && secrets.TOOLSHED_API_KEY || secrets.TESTTOOLSHED_API_KEY }}
+        run: |
+          test -n "$KEY" || { echo "Missing API key secret for ${{ inputs.target }}"; exit 1; }
+          planemo shed_update --shed_target ${{ inputs.target }} --shed_key "$KEY" \
+            --force_repository_creation --message "Eggsplorer $(git rev-parse --short HEAD)" .
