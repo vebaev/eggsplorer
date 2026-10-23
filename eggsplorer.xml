@@ -189,5 +189,13 @@ Sections:
 - **For Galaxy administrators**: Galaxy sanitises HTML outputs by default, which removes the report's JavaScript.
   Add this tool to ``sanitize_allowlist_file`` so the report works inside Galaxy. Users can always download
   the report and open it in a browser.
+
+**Citation**
+
+Eggsplorer: paper submitted.
+
+If you use the metabolic function scores, please cite KEGG-Decoder (Graham, Heidelberg and Tully 2018, ISME J 12:1861–1866)
+together with eggNOG-mapper and KEGG.
     ]]></help>
+    <expand macro="citations"/>
 </tool>
