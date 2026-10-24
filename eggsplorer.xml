@@ -155,8 +155,9 @@ Sections:
   This is a frequency profile, not an enrichment test. GO data (CC BY 4.0) is bundled with the tool.
 - **Cell overview**: the components found in the genome drawn where they act in the cell (respiratory chain, uptake systems,
   secretion and export, the largest transporter families, motility, metabolic function groups) on a fixed template;
-  the envelope is diderm when BamA is found with LpxC or LptD. NDH-1 counts both the nuo and the cyanobacterial ndh
-  complex, and b6f is drawn in the respiratory chain when present. A component is drawn when its completeness is at
+  the envelope is diderm when BamA is found with lipid A synthesis (LpxA, LpxC, LpxD) or LptD, and a cell wall is drawn
+  only with peptidoglycan synthesis. NDH-1 counts both the nuo and the cyanobacterial ndh complex; b6f, the Rnf complex,
+  SusCD (Bacteroidetes) and ESX (type VII secretion, Actinobacteria) are drawn when present. A component is drawn when its completeness is at
   least 0.50 and not all of its genes belong to a better-scoring component (one gene can carry several KOs); the
   others are listed under the drawing. Tiles for alternative systems (phototrophy, carbon fixation and C1,
   hydrogenases) name the systems found; methanogenesis is drawn only with methyl-coenzyme M reductase.
@@ -169,7 +170,7 @@ Sections:
   coloured by the completeness of its genes. The sulfur diagram separates dissimilatory sulfate reduction (outer arrows)
   from assimilation (inner arrows: sat or cysDN, cysH, cysJI or sir; KEGG module M00176) and sends TsdA/DoxDA to
   tetrathionate and Sox to sulfate. DNRA needs NrfA; NirBD/NirA and NasA/NarB alone are drawn as assimilation. A step
-  without its catalytic subunit is drawn pale; the serine pathway needs malyl-CoA lyase, the RuMP pathway Hps and Phi,
+  without its catalytic subunit is drawn pale; the CBB cycle needs RuBisCO and phosphoribulokinase, the serine pathway malyl-CoA lyase, the RuMP pathway Hps and Phi,
   and methanogenesis methyl-coenzyme M reductase. Steps that rest on the same proteins (also across diagrams, such as
   ammonia and methane monooxygenase) are drawn dashed and listed under the diagrams.
 - **Transporters**: Sankey diagram from TC class to subclass and family, and a table of families with names.

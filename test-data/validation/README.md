@@ -1,6 +1,6 @@
 # Reference genomes for the validation test
 
-KO assignments (`query`, `KEGG_ko`) of ten bacterial genomes whose cell envelope, respiratory chain,
+KO assignments (`query`, `KEGG_ko`) of twenty bacterial genomes whose cell envelope, respiratory chain,
 secretion systems and nitrogen, sulfur and C1 metabolism are well described. They are used by
 `tests/test_validation.py` to check the cell overview and element-cycle rules.
 
@@ -16,6 +16,16 @@ secretion systems and nitrogen, sulfur and C1 metabolism are well described. The
 | GCF_000025485.1 | *Allochromatium vinosum* DSM 180 |
 | GCF_000009725.1 | *Synechocystis* sp. PCC 6803 |
 | GCF_000008325.1 | *Methylococcus capsulatus* Bath |
+| GCF_000006985.1 | *Chlorobaculum tepidum* TLS |
+| GCF_000143685.1 | *Clostridium ljungdahlii* DSM 13528 |
+| GCF_011066545.1 | *Candidatus* Kuenenia stuttgartiensis CSTR1 |
+| GCF_001458695.1 | *Candidatus* Nitrospira inopinata ENR4 |
+| GCF_000006885.1 | *Streptococcus pneumoniae* TIGR4 |
+| GCF_000091545.1 | *Thermus thermophilus* HB8 |
+| GCF_000195955.2 | *Mycobacterium tuberculosis* H37Rv |
+| GCF_000027325.1 | *Mycoplasma genitalium* G37 |
+| GCF_000011065.1 | *Bacteroides thetaiotaomicron* VPI-5482 |
+| GCF_000009085.1 | *Campylobacter jejuni* NCTC 11168 |
 
 Provenance: the RefSeq protein FASTA of each assembly was annotated with eggNOG-mapper 2 in Galaxy
 (October 2026) and the KO column was extracted from the Eggsplorer report. Only proteins with at least

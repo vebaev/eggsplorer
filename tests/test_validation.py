@@ -1,4 +1,4 @@
-"""Cell overview and element cycles on ten reference genomes with well-known biology.
+"""Cell overview and element cycles on twenty reference genomes with well-known biology.
 
 The KO assignments in test-data/validation come from eggNOG-mapper runs on the RefSeq proteomes
 (see test-data/validation/README.md). For each genome the test lists components that must be drawn,
@@ -69,6 +69,37 @@ EXPECT = {
         envelope="Diderm", draw=["NDH-1", "bc1 / bcc"], nodraw=["flagellum"],
         lit=["CH₄ oxidation", "CH₃OH oxidation", "RuMP pathway", "CBB cycle", "N₂ fixation"],
         off=["methanogenesis"], shared=["NH₃ oxidation / CH₄ oxidation"], tile={"C fixation and C1": "sMMO"}),
+    "GCF_000006985.1": dict(  # Chlorobaculum tepidum TLS (green sulfur bacterium; RuBisCO-like protein, no PRK)
+        envelope="Diderm", draw=["bd oxidase"], nodraw=["flagellum"],
+        lit=["rTCA cycle", "N₂ fixation", "thiosulfate oxidation", "sulfide oxidation", "sulfite ⇄ sulfide"],
+        off=["CBB cycle", "methanogenesis"], tile={"Phototrophy": "RC-I", "C fixation and C1": "rTCA"}),
+    "GCF_000143685.1": dict(  # Clostridium ljungdahlii DSM 13528 (acetogen)
+        envelope="Monoderm", draw=["Rnf", "F-type ATPase", "flagellum"], nodraw=["NDH-1", "bd oxidase", "aa3 oxidase"],
+        lit=["Wood–Ljungdahl"], off=["methanogenesis", "CBB cycle"], tile={"C fixation and C1": "WL"}, notile=["Methanogenesis"]),
+    "GCF_011066545.1": dict(  # Candidatus Kuenenia stuttgartiensis CSTR1 (anammox; hzs/hdh have no KO in eggNOG)
+        envelope="Diderm", lit=["NO₂⁻ reduction"], off=["methanogenesis", "N₂ fixation"]),
+    "GCF_001458695.1": dict(  # Candidatus Nitrospira inopinata (comammox)
+        envelope="Diderm", lit=["NH₃ oxidation", "NH₂OH oxidation", "NO₂⁻ oxidation", "rTCA cycle"],
+        off=["CBB cycle", "methanogenesis"], shared=["NH₃ oxidation / CH₄ oxidation", "NO₂⁻ oxidation / NO₃⁻ reduction"]),
+    "GCF_000006885.1": dict(  # Streptococcus pneumoniae TIGR4 (no respiratory chain, competent)
+        envelope="Monoderm", draw=["F-type ATPase", "competence (com)", "Sec-SRP"],
+        nodraw=["NDH-1", "NDH-2", "bd oxidase", "aa3 oxidase", "flagellum", "T3SS"],
+        off=["N₂ fixation", "NO₃⁻ reduction", "sulfate activation", "methanogenesis"]),
+    "GCF_000091545.1": dict(  # Thermus thermophilus HB8 (V/A-type ATP synthase only)
+        draw=["V-type ATPase", "NDH-1"], nodraw=["F-type ATPase", "flagellum"], off=["N₂ fixation", "methanogenesis"],
+        envelope="Monoderm"),
+    "GCF_000195955.2": dict(  # Mycobacterium tuberculosis H37Rv
+        envelope="Monoderm", draw=["NDH-1", "NDH-2", "bc1 / bcc", "bd oxidase", "T7SS (ESX)"], nodraw=["flagellum", "T3SS"],
+        lit=["NO₃⁻ reduction", "NO₂⁻ assimilation"], off=["DNRA", "N₂ fixation", "methanogenesis"]),
+    "GCF_000027325.1": dict(  # Mycoplasma genitalium G37 (wall-less, minimal)
+        envelope="No cell wall", draw=["F-type ATPase"], nodraw=["NDH-1", "NDH-2", "flagellum", "Tat", "bd oxidase"],
+        off=["N₂ fixation", "NO₃⁻ reduction", "sulfate activation", "CBB cycle", "methanogenesis"]),
+    "GCF_000011065.1": dict(  # Bacteroides thetaiotaomicron VPI-5482
+        envelope="Diderm", draw=["Na-NQR", "Rnf", "SusCD (PUL)", "bd oxidase"], nodraw=["flagellum"],
+        lit=["DNRA"], off=["N₂ fixation", "methanogenesis"]),
+    "GCF_000009085.1": dict(  # Campylobacter jejuni NCTC 11168
+        envelope="Diderm", draw=["NDH-1", "bc1 / bcc", "cbb3 oxidase", "flagellum"], nodraw=["Na-NQR", "T3SS"],
+        lit=["NO₃⁻ reduction", "DNRA", "H₂ oxidation"], off=["N₂ fixation", "methanogenesis"]),
 }
 
 JS = """() => {
@@ -93,7 +124,7 @@ def annotations(acc, path):
 
 def check(acc, res, want):
     errs = []
-    env = [t for t in res["tiles"] if t[0].endswith("envelope")]
+    env = [t for t in res["tiles"] if t[0] in ("Diderm envelope", "Monoderm envelope", "No cell wall")]
     if not env or not env[0][0].startswith(want["envelope"]):
         errs.append(f"envelope {env}")
     errs += [f"not drawn: {n}" for n in want.get("draw", []) if n not in res["drawn"]]

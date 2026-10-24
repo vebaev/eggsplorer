@@ -610,23 +610,28 @@ __PLOTLY__
       ["bc1 / bcc", { any: [{ fn: "Ubiquinol-cytochrome c reductase" }, { ko: ["K03886", "K03887", "K03888"] }, { ko: ["K03889", "K03890", "K03891"] }] }], ["b6f", { fn: "Cytochrome b6/f complex" }], ["aa3 oxidase", { fn: "Cytochrome c oxidase" }],
       ["cbb3 oxidase", { fn: "Cytochrome c oxidase, cbb3-type" }], ["bo3 oxidase", { fn: "Cytochrome o ubiquinol oxidase" }],
       ["bd oxidase", { fn: "Cytochrome bd complex" }], ["aa3-600 oxidase", { fn: "Cytochrome aa3-600 menaquinol oxidase" }],
+      ["Rnf", { ko: ["K03612", "K03613", "K03614", "K03615", "K03616", "K03617"] }],
       ["F-type ATPase", { fn: "F-type ATPase" }], ["V-type ATPase", { fn: "V-type ATPase" }]];
     var UPTAKE = [["phosphate", { fn: "transporter: phosphate" }], ["phosphonate", { fn: "transporter: phosphonate" }],
       ["urea", { fn: "transporter: urea" }], ["thiamin", { fn: "transporter: thiamin" }], ["vitamin B12", { fn: "transporter: vitamin B12" }],
       ["Fe²⁺ (FeoB)", { fn: "Ferrous iron transporter FeoB" }], ["Fe³⁺ (AfuA)", { fn: "Ferric iron ABC-type substrate-binding AfuA" }],
       ["Mn²⁺ (MntH)", { fn: "Fe-Mn transporter MntH" }], ["Co²⁺ (CbiMQ)", { fn: "Cobalt transporter CbiMQ" }],
       ["Co²⁺ (CbtA)", { fn: "Cobalt transporter CbtA" }], ["Co²⁺/Mg²⁺ (CorA)", { fn: "Cobalt transporter CorA" }],
-      ["Ni²⁺ (NikA)", { fn: "Nickel ABC-type substrate-binding NikA" }]];
+      ["Ni²⁺ (NikA)", { fn: "Nickel ABC-type substrate-binding NikA" }],
+      // Bacteroidetes polysaccharide utilisation loci: SusC and SusD together
+      ["SusCD (PUL)", { ko: ["K21573", "K21572"], all: true, quiet: true }]];
     var EXPORT = [["Sec-SRP", { fn: "Sec-SRP" }], ["Tat", { fn: "Twin Arginine Targeting" }], ["T1SS", { fn: "Type I Secretion" }],
       ["T2SS", { fn: "Type II Secretion" }], ["T3SS", { fn: "Type III Secretion" }], ["T4SS", { fn: "Type IV Secretion" }],
       ["T5SS", { fn: "Type Vabc Secretion" }], ["T6SS", { fn: "Type VI Secretion" }], ["Cu⁺ export (CopA)", { fn: "Copper transporter CopA" }],
-      ["arsenic (ars)", { fn: "Arsenic reduction" }]];
+      ["arsenic (ars)", { fn: "Arsenic reduction" }],
+      // ESX secretion of Actinobacteria: mycosin (MycP) with an EsxA-family substrate
+      ["T7SS (ESX)", { ko: ["K14743", "K14956"], all: true, quiet: true }]];
     var SURF = [["flagellum", { fn: "Flagellum" }], ["chemotaxis", { fn: "Chemotaxis" }],
       ["adhesion / curli", { best: ["Adhesion", "Curli fimbriae biosynthesis"] }],
       // com genes as defined by Graham et al. are of the Bacillus type; a few homologues are common, so low scores are not listed
       ["competence (com)", { fn: "Competence-related core components", quiet: true }]];
     var ON_MEMBRANE = { energy: 1, transport: 1, secretion: 1, surface: 1 };
-    var ENVELOPE = ["K02535", "K04744", "K07277"];
+    var ENVELOPE = ["K00677", "K02535", "K02536", "K04744", "K07277"];
     var TC_SHOWN = /^(3\.D\.|3\.A\.2$|3\.A\.5$|2\.A\.64$|3\.A\.(6|7|15|20)$|1\.B\.(14|17)$)/;
     function score(n) { return EVc[n] ? EVc[n].score_corrected : null; }
     function genes(n) { return EVc[n] && typeof EVc[n].genes === "number" ? EVc[n].genes : 0; }
@@ -639,8 +644,8 @@ __PLOTLY__
         if (v !== null && (b.s === null || v > b.s)) { b = { s: v, g: genes(f), ids: ids(f) }; } }); return b; }
       var hit = rule.ko.filter(function (k) { return nko(k) > 0; }), set = {};
       hit.forEach(function (k) { (Array.isArray(KO[k]) ? KO[k] : []).forEach(function (x) { set[x] = 1; }); });
-      var g = Object.keys(set);
-      return { s: hit.length / rule.ko.length, g: g.length, ids: g };
+      var g = Object.keys(set), sc = hit.length / rule.ko.length;
+      return { s: rule.all && sc < 1 ? 0 : sc, g: g.length, ids: g };
     }
     function cls(s) { return s >= 1 ? "ce-full" : s >= 0.5 ? "ce-mid" : "ce-low"; }
     function scs(s) { return s.toFixed(2); }
@@ -664,7 +669,8 @@ __PLOTLY__
     function found(list, key) {
       var items = list.map(function (r) { return { name: r[0], v: evaluate(r[1]), quiet: r[1].quiet }; })
         .filter(function (it) { if (it.v.s >= DRAW_MIN) { return true; }
-          if (it.v.s > 0) { if (!it.quiet) { fragments.push(it.name + " " + scs(it.v.s)); } } else { missing[key].push(it.name); } return false; });
+          // quiet items belong to a few lineages only and are not listed when absent
+          if (!it.quiet) { if (it.v.s > 0) { fragments.push(it.name + " " + scs(it.v.s)); } else { missing[key].push(it.name); } } return false; });
       // a component whose genes all belong to a better-scoring one (one gene, several KOs) is not drawn
       var order = items.slice().sort(function (a, b) { return b.v.s - a.v.s; }), kept = [];
       order.forEach(function (it) {
@@ -675,10 +681,14 @@ __PLOTLY__
       return items.filter(function (it) { return !it.drop; });
     }
 
-    // outer membrane: BamA together with LPS synthesis (LpxC) or transport (LptD); one marker can be missed by annotation
-    var envFound = ENVELOPE.filter(function (k) { return nko(k) > 0; }), diderm = nko("K07277") > 0 && (nko("K02535") > 0 || nko("K04744") > 0);
+    // outer membrane: BamA together with lipid A synthesis (LpxA, LpxC, LpxD) or LPS transport (LptD);
+    // one marker can be missed by annotation, so any one of them is enough
+    var envFound = ENVELOPE.filter(function (k) { return nko(k) > 0; }),
+      diderm = nko("K07277") > 0 && ["K00677", "K02535", "K02536", "K04744"].some(function (k) { return nko(k) > 0; });
+    // a cell wall is drawn only with peptidoglycan synthesis (at least four of MurA, MurB, MurC, MurE, MraY, MurG)
+    var wall = ["K00790", "K00075", "K01924", "K01928", "K01000", "K02563"].filter(function (k) { return nko(k) > 0; }).length >= 4;
     if (diderm) { rr(P + 8, "ce-peri"); rr(P + 8, "ce-membrane"); rr(P + 16, "ce-mline"); rr(P, "ce-mline"); }
-    else { rr(P / 2 + 4, "ce-wall", { "stroke-width": P }); rr(P + 4, "ce-wall-line"); }
+    else if (wall) { rr(P / 2 + 4, "ce-wall", { "stroke-width": P }); rr(P + 4, "ce-wall-line"); }
     rr(0, "ce-cyto"); rr(0, "ce-membrane"); rr(8, "ce-mline"); rr(-8, "ce-mline");
     var top = Y0, bot = Y0 + H, out = P + 22;
     E("text", { x: X0 + W / 2, y: 22, "class": "ce-zone", "text-anchor": "middle" }, svg, T.cell_zone_resp);
@@ -728,7 +738,8 @@ __PLOTLY__
     // a group is drawn only with its key enzyme: methyl-coenzyme M reductase for methanogenesis
     var GATE = { methano: { fn: "Coenzyme M reduction to methane", label: "mcrABG" } };
     function tileScore(f) { var v = score(f);
-      if (f === "CBB Cycle") { v = Math.min(v || 0, score("RuBisCo") || 0); }  // CBB needs RuBisCO, the rest is shared with glycolysis
+      // CBB needs RuBisCO and phosphoribulokinase; the rest is shared with glycolysis and the pentose phosphate pathway
+      if (f === "CBB Cycle") { v = Math.min(v || 0, score("RuBisCo") || 0); if (!nko("K00855")) { v = Math.min(v, 0.49); } }
       if (f === "Serine pathway/formaldehyde assimilation" && !nko("K08691")) { v = Math.min(v || 0, 0.49); }  // needs malyl-CoA lyase
       return v; }
     D.decoder.groups.filter(function (gr) { return !ON_MEMBRANE[gr.key]; }).forEach(function (gr) {
@@ -755,10 +766,12 @@ __PLOTLY__
         t.full + "/" + t.gr.functions.length + " " + T.cell_complete + (t.part ? ", " + t.part + " " + T.cell_partial : ""));
       E("title", {}, g, t.gr.label); });
     var pe = cell(tiles.length), eg = E("g", { "class": "ce-tile" }, svg);
-    E("rect", { x: pe.x - 81, y: pe.y - 22, width: 162, height: 44, rx: 7, fill: diderm ? "#f7faf9" : "#efe6d2", stroke: "rgba(29,42,44,0.25)" }, eg);
-    E("text", { "class": "t1", x: pe.x, y: pe.y - 3, "text-anchor": "middle" }, eg, diderm ? T.cell_diderm : T.cell_monoderm);
-    var envNames = { K02535: "lpxC", K04744: "lptD", K07277: "bamA" };
-    E("text", { "class": "t2", x: pe.x, y: pe.y + 12, "text-anchor": "middle" }, eg, diderm ? envFound.map(function (k) { return envNames[k]; }).join(" · ") : T.cell_monoderm_s);
+    E("rect", { x: pe.x - 81, y: pe.y - 22, width: 162, height: 44, rx: 7, fill: diderm || !wall ? "#f7faf9" : "#efe6d2", stroke: "rgba(29,42,44,0.25)" }, eg);
+    E("text", { "class": "t1", x: pe.x, y: pe.y - 3, "text-anchor": "middle" }, eg, diderm ? T.cell_diderm : wall ? T.cell_monoderm : T.cell_wallless);
+    var envNames = { K00677: "lpxA", K02535: "lpxC", K02536: "lpxD", K04744: "lptD", K07277: "bamA" };
+    E("text", { "class": "t2", x: pe.x, y: pe.y + 12, "text-anchor": "middle" }, eg, diderm ? ["K02535", "K04744", "K00677", "K02536"].filter(function (k) { return nko(k) > 0; }).slice(0, 2).concat(["K07277"])
+      .map(function (k) { return envNames[k]; }).join(" · ")
+      : wall ? T.cell_monoderm_s : T.cell_wallless_s);
 
     var heads = { resp: T.cell_nf_resp, up: T.cell_nf_up, ex: T.cell_nf_ex, surf: T.cell_nf_surf, groups: T.cell_nf_groups, frag: T.cell_frag, shared: T.cell_nf_shared };
     missing.frag = fragments;
@@ -767,8 +780,8 @@ __PLOTLY__
       .map(function (k) { return '<div class="ce-nfrow"><b>' + esc(heads[k]) + "</b>" + missing[k].map(function (m) { return '<span class="ce-chip">' + esc(m) + "</span>"; }).join("") + "</div>"; }).join("")
       : '<p class="note">' + esc(T.cell_nf_all) + "</p>");
     var lg = $("ce-legend");
-    [["var(--s4)", T.cell_l_full], ["var(--s3)", T.cell_l_mid], ["var(--s2)", T.cell_l_low], ["var(--p8)", T.cell_l_tc],
-      [diderm ? "#f7faf9" : "#efe6d2", diderm ? T.cell_l_peri : T.cell_l_wall]].forEach(function (x) {
+    [["var(--s4)", T.cell_l_full], ["var(--s3)", T.cell_l_mid], ["var(--s2)", T.cell_l_low], ["var(--p8)", T.cell_l_tc]]
+      .concat(diderm || wall ? [[diderm ? "#f7faf9" : "#efe6d2", diderm ? T.cell_l_peri : T.cell_l_wall]] : []).forEach(function (x) {
       lg.insertAdjacentHTML("beforeend", '<span><i class="ce-sw" style="background: ' + x[0] + '"></i>' + esc(x[1]) + "</span>"); });
 
     // layout check used by the automated tests
@@ -915,7 +928,7 @@ __PLOTLY__
       CH4: { x: 92, y: 56, r: 26, t: "CH₄" }, CH3OH: { x: 262, y: 56, r: 34, t: "CH₃OH" }, HCHO: { x: 432, y: 56, r: 32, t: "HCHO" },
       H2: { x: 92, y: 404, r: 24, t: "H₂" }, HP: { x: 432, y: 404, r: 30, t: "2H⁺" }
     }, [
-      { from: "CO2", to: "BIO", name: ["CBB cycle", "цикъл на Калвин"], genes: "", score: allOf(["RuBisCo", "CBB Cycle"]), bend: 128, oneLine: true },
+      { from: "CO2", to: "BIO", name: ["CBB cycle", "цикъл на Калвин"], genes: "", score: core(allOf(["RuBisCo", "CBB Cycle"]), ["K00855"], "prk"), bend: 128, oneLine: true },
       { from: "CO2", to: "BIO", name: ["rTCA cycle", "rTCA цикъл"], genes: "", score: S("rTCA Cycle"), bend: 64, oneLine: true },
       { from: "CO2", to: "BIO", name: ["Wood–Ljungdahl", "Wood–Ljungdahl"], genes: "", score: S("Wood-Ljungdahl"), bend: 0, oneLine: true },
       { from: "CO2", to: "BIO", name: ["3-HP bicycle", "3-HP двоен цикъл"], genes: "", score: S("3-Hydroxypropionate Bicycle"), bend: -64, oneLine: true },

@@ -347,6 +347,13 @@ CAZY_SUBSTRATE_EXCLUDE = {
 # KEGG KO entries on 2026-10-22. Envelope: diderm when lpxC, lptD and bamA are all present.
 CELL_EXTRA_KOS = {
     "K02535": "lpxC", "K04744": "lptD", "K07277": "bamA",            # LPS outer-membrane markers
+    "K00677": "lpxA", "K02536": "lpxD",                              # lipid A synthesis
+    "K00790": "murA", "K00075": "murB", "K01924": "murC", "K01928": "murE",
+    "K01000": "mraY", "K02563": "murG",                              # peptidoglycan synthesis (cell wall)
+    "K03612": "rnfG", "K03613": "rnfE", "K03614": "rnfD", "K03615": "rnfC",
+    "K03616": "rnfB", "K03617": "rnfA",                              # Rnf complex
+    "K21573": "susC", "K21572": "susD",                              # Bacteroidetes polysaccharide utilisation loci
+    "K14743": "mycP", "K14956": "esxA",                              # ESX (type VII) secretion, Actinobacteria
     "K00239": "sdhA", "K00240": "sdhB", "K00241": "sdhC", "K00242": "sdhD",  # succinate dehydrogenase / fumarate reductase
     "K03885": "ndh",                                                  # type II NADH dehydrogenase
     "K03886": "qcrA", "K03887": "qcrB", "K03888": "qcrC",             # menaquinol-cytochrome c reductase, Bacillus type
@@ -367,6 +374,7 @@ CYCLE_EXTRA_KOS = {
     "K00372": "nasA", "K00367": "narB", "K10534": "NR",  # assimilatory nitrate reductases
     # C1: formaldehyde assimilation
     "K08691": "mcl",                                    # malyl-CoA lyase, marker of the serine cycle
+    "K00855": "prk",                                    # phosphoribulokinase, needed with RuBisCO for the CBB cycle
     "K08093": "hxlA", "K08094": "hxlB",                 # RuMP pathway: 3-hexulose-6-phosphate synthase / isomerase
     "K13812": "fae-hps", "K13831": "hps-phi",           # fused RuMP enzymes
     # catalytic subunits that a step needs before its accessory subunits count
