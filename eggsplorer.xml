@@ -1,8 +1,16 @@
-<tool id="eggsplorer" name="Eggsplorer" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
+<tool id="eggsplorer" name="Eggsplorer" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@" license="MIT">
     <description>interactive HTML report of eggNOG-mapper functional annotations</description>
     <macros>
         <import>macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0085</edam_topic>
+        <edam_topic>topic_0092</edam_topic>
+        <edam_topic>topic_3301</edam_topic>
+    </edam_topics>
+    <edam_operations>
+        <edam_operation>operation_0337</edam_operation>
+    </edam_operations>
     <expand macro="requirements"/>
     <version_command>python '$__tool_directory__/eggsplorer.py' --version</version_command>
     <command detect_errors="exit_code"><![CDATA[
@@ -206,4 +214,8 @@ If you use the metabolic function scores, please cite KEGG-Decoder (Graham, Heid
 together with eggNOG-mapper and KEGG.
     ]]></help>
     <expand macro="citations"/>
+    <creator>
+        <person givenName="Vesselin" familyName="Baev" email="baev@uni-plovdiv.bg"/>
+        <organization name="University of Plovdiv Paisii Hilendarski"/>
+    </creator>
 </tool>
