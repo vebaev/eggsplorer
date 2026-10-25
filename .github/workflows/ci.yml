@@ -29,6 +29,14 @@ jobs:
           python -I tests/test_cell.py
           python -I tests/test_validation.py
           python tests/render_galaxy_tests.py
+      - name: Build and smoke-test the Python package
+        run: |
+          pip install build
+          python -m build -o dist .
+          python -m venv /tmp/pkg && /tmp/pkg/bin/pip install dist/*.whl plotly==5.24.1
+          cd /tmp && /tmp/pkg/bin/eggsplorer --version
+          /tmp/pkg/bin/eggsplorer -i "$GITHUB_WORKSPACE/test-data/synthetic.emapper.annotations" -o /tmp/pkg_report.html --tables /tmp/pkg_tables
+          test "$(ls /tmp/pkg_tables | wc -l)" -eq 10
 
   galaxy:
     runs-on: ubuntu-latest

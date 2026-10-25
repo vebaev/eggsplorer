@@ -7,3 +7,6 @@ tool_test_output.*
 !test-data/*.emapper.annotations
 *_report.html
 *.zip
+dist/
+build/
+*.egg-info/

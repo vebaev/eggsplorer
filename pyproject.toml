@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eggsplorer"
+dynamic = ["version"]
+description = "Interactive HTML report of eggNOG-mapper functional annotations of bacterial genomes"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE", "fonts/OFL.txt", "third_party/kegg_decoder/LICENSE"]
+authors = [{ name = "Vesselin Baev", email = "baev@uni-plovdiv.bg" }]
+requires-python = ">=3.9"
+dependencies = ["plotly>=5"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+[project.urls]
+Homepage = "https://github.com/vebaev/eggsplorer"
+
+[project.scripts]
+eggsplorer = "eggsplorer.eggsplorer:main"
+
+[tool.setuptools]
+# the repository root is the package directory: eggsplorer.py and its helper modules
+# stay where the Galaxy wrapper expects them
+package-dir = { "eggsplorer" = "." }
+packages = ["eggsplorer"]
+include-package-data = false
+
+[tool.setuptools.package-data]
+eggsplorer = [
+    "report_template.html",
+    "fonts/*",
+    "refdata_cazy/*",
+    "refdata_ec/*",
+    "refdata_go/*",
+    "third_party/kegg_decoder/*",
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "eggsplorer.eggsplorer.TOOL_VERSION" }
