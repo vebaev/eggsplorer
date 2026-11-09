@@ -13,18 +13,36 @@ motility and metabolic function groups on one fixed template) · metabolic funct
 diagrams · TC transporters (Sankey) · EC classes with ENZYME names (Sankey) · CAZy families and
 CAZy by substrate · Pfam domains · searchable gene table. English or Bulgarian.
 
+## Where things live
+
+| What | Where |
+|---|---|
+| Source code, tests, reference data (this repository) | https://github.com/vebaev/eggsplorer |
+| Conda package (`eggsplorer` command) | Bioconda: `conda install -c conda-forge -c bioconda eggsplorer` |
+| Official Galaxy wrapper | [galaxyproteomics/tools-galaxyp](https://github.com/galaxyproteomics/tools-galaxyp/tree/master/tools/eggsplorer) |
+| Galaxy Tool Shed | [galaxyp/eggsplorer](https://toolshed.g2.bx.psu.edu/view/galaxyp/eggsplorer) |
+| Public Galaxy server | [usegalaxy.eu](https://usegalaxy.eu), section *Annotation* |
+| Tutorial | [Galaxy Training Network](https://training.galaxyproject.org/training-material/topics/genome-annotation/tutorials/eggsplorer/tutorial.html) |
+
+Changes to the code are made here and released as a new version (Bioconda picks up new releases); the
+wrapper in tools-galaxyp then gets a version bump, and usegalaxy.eu installs it automatically.
+`eggsplorer.xml` and `macros.xml` in this repository are a development copy of the wrapper that runs the
+scripts from this folder; the KofamScan input is not offered in Galaxy at present (the `--kofam` option of
+the command line remains).
+
 ## Use in Galaxy
 
-Install from the Galaxy Tool Shed (owner `vebaev`, repository `eggsplorer`) or add the folder to a
-local `tool_conf.xml`. Galaxy removes JavaScript from HTML outputs by default, so an administrator
-should add `eggsplorer` to the HTML allowlist (`sanitize_allowlist_file`, or *Admin → Manage
-Allowlist*) for the report to work inside Galaxy. A downloaded report always works in a browser.
+Install from the Galaxy Tool Shed (owner `galaxyp`, repository `eggsplorer`). Galaxy removes JavaScript
+from HTML outputs by default, so an administrator should add
+`toolshed.g2.bx.psu.edu/repos/galaxyp/eggsplorer/eggsplorer` to the HTML allowlist
+(`sanitize_allowlist_file`, or *Admin → Manage Allowlist*) for the report to work inside Galaxy. A
+downloaded report always works in a browser.
 
 ## Layout
 
 | File | Role |
 |---|---|
-| `eggsplorer.xml`, `macros.xml` | Galaxy wrapper |
+| `eggsplorer.xml`, `macros.xml` | development copy of the Galaxy wrapper (official one in tools-galaxyp) |
 | `eggsplorer.py` | parses the annotations, computes summaries, writes HTML and TSV tables |
 | `report_template.html` | page layout, styles and charts (Plotly) |
 | `fonts/` | IBM Plex fonts (SIL OFL 1.1), embedded unchanged in every report |
